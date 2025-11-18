@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/script.js}"></script>
     <title>Title</title>
 </head>
 <body>
+    <form th:action="@{/home}" th:object="${attendancesSearchForm}" method="get">
+        <input type="hidden" name="date" th:value="${prevMonth}">
+        <input type="submit" value="前月へ">
+    </form>
+    <form th:action="@{/home}" th:object="${attendancesSearchForm}" method="get">
+        <input type="hidden" name="date" th:value="${nextMonth}">
+        <input type="submit" value="翌月へ">
+    </form>
 
+    <table>
+        <thead>
+            <tr>
+                <td>日付</td>
+                <td>勤務区分</td>
+                <td>開始</td>
+                <td>終了</td>
+                <td>休憩時間</td>
+                <td>労働時間</td>
+                <td>メモ</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="date : ${allDates}">
+                <td th:text="${date}"></td>
+                <td th:if="${attendancesList[date.toString()]} != null">
+                    <p th:text="${attendancesList[date.toString()].workType == 1 ? '顧客業務（オンサイト）' :
+                  attendancesList[date.toString()].workType == 2 ? '顧客業務（オフサイト）' :
+                  attendancesList[date.toString()].workType == 3 ? '社内業務（オンサイト）' :
+                  attendancesList[date.toString()].workType == 4 ? '社内業務（オフサイト）' :
+                  attendancesList[date.toString()].workType == 5 ? '欠勤' :
+                  attendancesList[date.toString()].workType == 6 ? '有給休暇（全体）' :
+                  attendancesList[date.toString()].workType == 7 ? '有給休暇（半休）' :
+                  attendancesList[date.toString()].workType == 8 ? '代休' :
+                  attendancesList[date.toString()].workType == 9 ? '夏季休暇' :
+                  attendancesList[date.toString()].workType == 10 ? '忌引休暇' :
+                  ''}">
+                    </p>
+                </td>
+                <td th:if="${attendancesList[date.toString()]} != null">
+                    <p th:text="${attendancesList[date.toString()].startTime}" class="startTime"></p>
+                </td>
+                <td th:if="${attendancesList[date.toString()]} != null">
+                    <p th:text="${attendancesList[date.toString()].endTime}" class="endTime"></p>
+                </td>
+                <td th:if="${attendancesList[date.toString()]} != null">
+                    <p th:text="${attendancesList[date.toString()].rest}" class="rest"></p>
+                </td>
+                <td class="workTime"></td>
+
+                <td th:if="${attendancesList[date.toString()]} != null">
+                    <p th:text="${attendancesList[date.toString()].memo}"></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
