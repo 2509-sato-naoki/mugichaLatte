@@ -1,13 +1,23 @@
 package com.example.mugichaLatte.controller;
 
+import com.example.mugichaLatte.controller.form.AttendancesEditForm;
+import com.example.mugichaLatte.controller.form.PasswordForm;
 import com.example.mugichaLatte.repository.entity.Attendances;
 import com.example.mugichaLatte.service.AttendancesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AttendancesEditController {
@@ -22,13 +32,35 @@ public class AttendancesEditController {
         //IDが数字かどうか判断する処理
         if(!id.matches("\\d+")){
             redirectAttributes.addFlashAttribute("errorMessages", "不正なパラメータが入力されました");
-            mav.setViewName("redirect:/attendance-edit/id");
+            mav.setViewName("redirect:/home");
             return mav;
         }
 
         //idに対応する勤怠記録をもっていってセットする
-        Attendances attendances = attendancesService.findAttendances(id);
+        AttendancesEditForm attendances = attendancesService.findAttendances(id);
         mav.addObject("attendancesEditForm", attendances);
         return mav;
+    }
+
+    @PostMapping("attendance-edit/")
+    public ModelAndView attendancesEdit(@ModelAttribute @Validated AttendancesEditForm form,
+                                        BindingResult result,
+                                        RedirectAttributes redirectAttributes) {
+        ModelAndView mav = new ModelAndView();
+        List<String> errorMessages = new ArrayList<>();
+        if (result.hasErrors()) {
+            for(FieldError error : result.getFieldErrors()){
+                errorMessages.add(error.getDefaultMessage());
+            }
+        }
+        if (errorMessages.size() > 0) {
+            //バリデーションエラーに引っかかった時の処理
+            redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
+            redirectAttributes.addFlashAttribute("attendancesEditForm", form);
+            return new ModelAndView("redirect:/attendance-edit/" + form.getId());
+        } else {
+            //編集処理
+            return new ModelAndView("redirect:/home");
+        }
     }
 }

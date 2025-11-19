@@ -1,5 +1,6 @@
 package com.example.mugichaLatte.service;
 
+import com.example.mugichaLatte.controller.form.AttendancesEditForm;
 import com.example.mugichaLatte.controller.form.AttendancesSearchForm;
 import com.example.mugichaLatte.repository.AttendancesRepository;
 import com.example.mugichaLatte.repository.entity.Attendances;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
@@ -49,9 +51,20 @@ public class AttendancesService {
         }
     }
 
-    public Attendances findAttendances(String id) {
+    public AttendancesEditForm findAttendances(String id) {
         int attendancesId = Integer.parseInt(id);
         Attendances attendances = attendancesRepository.findById(attendancesId).orElse(null);
-        return attendances;
+        AttendancesEditForm form = new AttendancesEditForm();
+        form.setId(attendances.getId());
+        form.setUserId(attendances.getUserId());
+        form.setDate(attendances.getDate());
+        form.setWorkType(attendances.getWorkType());
+        form.setStartTime(attendances.getStartTime());
+        form.setEndTime(attendances.getEndTime());
+        form.setRest(attendances.getRest());
+        form.setStatus(attendances.getStatus());
+        form.setMemo(attendances.getMemo());
+        form.setApprovalStatus(attendances.getApprovalStatus());
+        return form;
     }
 }

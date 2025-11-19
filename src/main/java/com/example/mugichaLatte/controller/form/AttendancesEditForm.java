@@ -1,7 +1,10 @@
 package com.example.mugichaLatte.controller.form;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,10 +19,14 @@ public class AttendancesEditForm {
 
     private LocalDate date;
 
+    @NotNull(message = "勤務区分を選択してください")
     private Integer workType;
 
+    @NotNull(message="開始時間を入力してください")
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime startTime;
 
+    @NotNull(message="開始時間を入力してください")
     private LocalTime endTime;
 
     private Integer rest;
@@ -28,6 +35,5 @@ public class AttendancesEditForm {
 
     private String memo;
 
-    //approval_status
-    //private Integer approvalStatus;
+    private Integer approvalStatus;
 }
