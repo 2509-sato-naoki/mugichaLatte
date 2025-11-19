@@ -14,7 +14,7 @@ import java.util.*;
 public class AttendancesService {
     @Autowired
     AttendancesRepository attendancesRepository;
-    public Map<String, Attendances> findAllAttendances(AttendancesSearchForm form) {
+    public Map<String, Attendances> findAllAttendances(AttendancesSearchForm form, int userId) {
         //何も検索されていない場合,今月の月の勤怠を取得する（初期画面表示）
         if (form.getDate() == null) {
             LocalDate now = LocalDate.now();
@@ -22,8 +22,6 @@ public class AttendancesService {
             LocalDate firstDay = now.with(TemporalAdjusters.firstDayOfMonth());
             // 今月の最後の日
             LocalDate lastDay = now.with(TemporalAdjusters.lastDayOfMonth());
-            //暫定対応
-            int userId = 1;
 
             //リストで月の勤怠記録を取得
             List<Attendances> attendancesList= attendancesRepository.findAllAttendances(firstDay, lastDay, userId);
@@ -39,8 +37,6 @@ public class AttendancesService {
             LocalDate firstDay = form.getDate().with(TemporalAdjusters.firstDayOfMonth());
             // 検索月の最後の日
             LocalDate lastDay = form.getDate().with(TemporalAdjusters.lastDayOfMonth());
-            //暫定対応
-            int userId = 1;
 
             //リストで月の勤怠記録を取得
             List<Attendances> attendancesList= attendancesRepository.findAllAttendances(firstDay, lastDay, userId);

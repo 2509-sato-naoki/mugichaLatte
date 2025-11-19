@@ -29,36 +29,86 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="date : ${allDates}">
-                <td th:text="${date}"></td>
-                <td th:if="${attendancesList[date.toString()]} != null">
-                    <p th:text="${attendancesList[date.toString()].workType == 1 ? '顧客業務（オンサイト）' :
-                  attendancesList[date.toString()].workType == 2 ? '顧客業務（オフサイト）' :
-                  attendancesList[date.toString()].workType == 3 ? '社内業務（オンサイト）' :
-                  attendancesList[date.toString()].workType == 4 ? '社内業務（オフサイト）' :
-                  attendancesList[date.toString()].workType == 5 ? '欠勤' :
-                  attendancesList[date.toString()].workType == 6 ? '有給休暇（全体）' :
-                  attendancesList[date.toString()].workType == 7 ? '有給休暇（半休）' :
-                  attendancesList[date.toString()].workType == 8 ? '代休' :
-                  attendancesList[date.toString()].workType == 9 ? '夏季休暇' :
-                  attendancesList[date.toString()].workType == 10 ? '忌引休暇' :
-                  ''}">
-                    </p>
-                </td>
-                <td th:if="${attendancesList[date.toString()]} != null">
-                    <p th:text="${attendancesList[date.toString()].startTime}" class="startTime"></p>
-                </td>
-                <td th:if="${attendancesList[date.toString()]} != null">
-                    <p th:text="${attendancesList[date.toString()].endTime}" class="endTime"></p>
-                </td>
-                <td th:if="${attendancesList[date.toString()]} != null">
-                    <p th:text="${attendancesList[date.toString()].rest}" class="rest"></p>
-                </td>
-                <td class="workTime"></td>
+<!--            <tr th:each="date : ${allDates}">-->
+<!--                <a th:href="@{/attendance-edit/{id}(id=${(attendancesList[date.toString()]).id})}">-->
+<!--                <td th:text="${date}"></td>-->
+<!--                <td th:if="${attendancesList[date.toString()]} != null">-->
+<!--                    <p th:text="${attendancesList[date.toString()].workType == 1 ? '顧客業務（オンサイト）' :-->
+<!--                  attendancesList[date.toString()].workType == 2 ? '顧客業務（オフサイト）' :-->
+<!--                  attendancesList[date.toString()].workType == 3 ? '社内業務（オンサイト）' :-->
+<!--                  attendancesList[date.toString()].workType == 4 ? '社内業務（オフサイト）' :-->
+<!--                  attendancesList[date.toString()].workType == 5 ? '欠勤' :-->
+<!--                  attendancesList[date.toString()].workType == 6 ? '有給休暇（全体）' :-->
+<!--                  attendancesList[date.toString()].workType == 7 ? '有給休暇（半休）' :-->
+<!--                  attendancesList[date.toString()].workType == 8 ? '代休' :-->
+<!--                  attendancesList[date.toString()].workType == 9 ? '夏季休暇' :-->
+<!--                  attendancesList[date.toString()].workType == 10 ? '忌引休暇' :-->
+<!--                  ''}">-->
+<!--                    </p>-->
+<!--                </td>-->
+<!--                <td th:if="${attendancesList[date.toString()]} != null">-->
+<!--                    <p th:text="${attendancesList[date.toString()].startTime}" class="startTime"></p>-->
+<!--                </td>-->
+<!--                <td th:if="${attendancesList[date.toString()]} != null">-->
+<!--                    <p th:text="${attendancesList[date.toString()].endTime}" class="endTime"></p>-->
+<!--                </td>-->
+<!--                <td th:if="${attendancesList[date.toString()]} != null">-->
+<!--                    <p th:text="${attendancesList[date.toString()].rest}" class="rest"></p>-->
+<!--                </td>-->
+<!--                <td class="workTime"></td>-->
 
-                <td th:if="${attendancesList[date.toString()]} != null">
-                    <p th:text="${attendancesList[date.toString()].memo}"></p>
-                </td>
+<!--                <td th:if="${attendancesList[date.toString()]} != null">-->
+<!--                    <p th:text="${attendancesList[date.toString()].memo}"></p>-->
+<!--                </td>-->
+<!--                </a>-->
+<!--            </tr>-->
+            <tr th:each="date : ${allDates}"
+                th:with="att=${attendancesList[date.toString()]}"
+                th:onclick="${att != null} ? 'location.href=\'/mugichaLatte/attendance-edit/' + ${att.id} + '\';' : 'location.href=\'/mugichaLatte/register\';'"
+            >
+                    <!-- 日付 -->
+                    <td th:text="${date}"></td>
+
+                    <!-- 勤務タイプ -->
+                    <td>
+                        <p th:text="${
+                            att != null ?
+                            (att.workType == 1 ? '顧客業務（オンサイト）' :
+                             att.workType == 2 ? '顧客業務（オフサイト）' :
+                             att.workType == 3 ? '社内業務（オンサイト）' :
+                             att.workType == 4 ? '社内業務（オフサイト）' :
+                             att.workType == 5 ? '欠勤' :
+                             att.workType == 6 ? '有給休暇（全体）' :
+                             att.workType == 7 ? '有給休暇（半休）' :
+                             att.workType == 8 ? '代休' :
+                             att.workType == 9 ? '夏季休暇' :
+                             att.workType == 10 ? '忌引休暇' : '')
+                            : ''
+                        }"></p>
+                    </td>
+
+                    <!-- startTime -->
+                    <td>
+                        <p th:text="${att != null ? att.startTime : ''}" class="startTime"></p>
+                    </td>
+
+                    <!-- endTime -->
+                    <td>
+                        <p th:text="${att != null ? att.endTime : ''}" class="endTime"></p>
+                    </td>
+
+                    <!-- rest -->
+                    <td>
+                        <p th:text="${att != null ? att.rest : ''}" class="rest"></p>
+                    </td>
+
+                    <!-- workTime は JS 計算？ 空欄 -->
+                    <td class="workTime"></td>
+
+                    <!-- memo -->
+                    <td>
+                        <p th:text="${att != null ? att.memo : ''}"></p>
+                    </td>
             </tr>
         </tbody>
     </table>

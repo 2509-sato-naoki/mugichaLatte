@@ -21,7 +21,7 @@ public class LoginService {
             return "ログインに失敗しました";
         }
 
-        if(user.getIsStopped() == 1){
+        if(user.getIsStopped() == 0){
             return "ログインに失敗しました";
         }
 

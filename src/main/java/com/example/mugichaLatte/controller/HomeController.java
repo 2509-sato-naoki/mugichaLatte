@@ -2,6 +2,7 @@ package com.example.mugichaLatte.controller;
 
 import com.example.mugichaLatte.controller.form.AttendancesSearchForm;
 import com.example.mugichaLatte.repository.entity.Attendances;
+import com.example.mugichaLatte.repository.entity.User;
 import com.example.mugichaLatte.service.AttendancesService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -26,7 +26,8 @@ public class HomeController {
                                     HttpSession session) {
         ModelAndView mav = new ModelAndView();
         LocalDate now = LocalDate.now();
-        Map<String, Attendances> attendancesList = attendancesService.findAllAttendances(form);
+        User user = (User) session.getAttribute("loginUser");
+        Map<String, Attendances> attendancesList = attendancesService.findAllAttendances(form, user.getId());
 
         LocalDate prevMonth = null;
         LocalDate nextMonth = null;
