@@ -42,6 +42,9 @@ public class Attendances {
     @Column(name = "memo")
     private String memo;
 
+    @Column(name = "approval_status")
+    private int approvalStatus;
+
 //    private int workTime;
 
 }

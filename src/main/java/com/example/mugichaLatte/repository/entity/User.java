@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "users")
 @Getter
 @Setter
-@Table(name = "users")
 public class User {
     /** ID */
     @Id

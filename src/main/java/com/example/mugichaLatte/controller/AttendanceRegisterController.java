@@ -54,5 +54,8 @@ public class AttendanceRegisterController {
             mav.addObject("errorMessages", errorMessages);
             return mav;
         }
+
+        attendanceRegisterService.insertAttendance(userId, attendanceRegisterForm);
+        return new ModelAndView("redirect:/home");
     }
 }
