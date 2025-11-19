@@ -48,4 +48,10 @@ public class AttendancesService {
             return dateToAttendance;
         }
     }
+
+    public Attendances findAttendances(String id) {
+        int attendancesId = Integer.parseInt(id);
+        Attendances attendances = attendancesRepository.findById(attendancesId).orElse(null);
+        return attendances;
+    }
 }
