@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>勤怠登録</title>
+    </head>
+
+    <body>
+        <h1>勤怠登録</h1>
+        <!--メニュー-->
+        <a th:href="@{/home}">ホーム画面</a>
+
+        <!--エラーメッセージ-->
+        <div th:if="${errorMessages != null}">
+            <ul>
+                <li th:each="err : ${errorMessages}" th:text="${err}"></li>
+            </ul>
+        </div>
+
+        <!--入力フォーム-->
+        <form th:action="@{/attendance/register}" method="post" th:object="${attendanceRegisterForm}">
+
+            <!--日付-->
+            <label>日付</label><br>
+            <input type="date" th:field="*{date}"><br>
+
+            <!--勤務区分-->
+            <label>勤務区分</label><br>
+            <select th:field="*{workType}">
+                <option value="">選択してください</option>
+                <option value="1">顧客営業（オンサイト）</option>
+                <option value="2">顧客営業（オフサイト）</option>
+                <option value="3">社内業務（オンサイト）</option>
+                <option value="4">社内業務（オフサイト）</option>
+                <option value="5">欠勤</option>
+                <option value="6">有給休暇（全休）</option>
+                <option value="7">有給休暇（半休）</option>
+                <option value="8">代休</option>
+                <option value="9">夏季休暇</option>
+                <option value="10">忌引休暇</option>
+            </select><br>
+
+            <!--勤務開始時刻-->
+            <label>勤務開始時刻</label><br>
+            <input type="time" th:field="*{startTime}"><br>
+
+            <!--勤務終了時刻-->
+            <label>勤務終了時刻</label><br>
+            <input type="time" th:field="*{endTime}"><br>
+
+            <!--休憩時間-->
+            <label>休憩時間（分）</label><br>
+            <input type="number" th:field="*{rest}" min="0"><br>
+
+            <!--申請ステータス-->
+            <label>申請しますか？</label><br>
+            <select th:field="*{status}">
+                <option value="0">申請しない</option>
+                <option value="1">申請する</option>
+            </select><br>
+
+            <!--メモ-->
+            <label>メモ（50文字以内）</label><br>
+
+            <!--ボタン-->
+            <textarea th:field="*{memo}" maxlength="50"></textarea><br>
+            <button type="submit">登録</button>
+        </form>
+    </body>
+</html>

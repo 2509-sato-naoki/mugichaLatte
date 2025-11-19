@@ -23,4 +23,7 @@ public interface AttendancesRepository extends JpaRepository<Attendances, Intege
                 @Param("endDate") LocalDate endDate,
                 @Param("userId") int userId
         );
+
+    //重複チェック用
+    boolean existsByUserIdAndDate(int userId, LocalDate date);
 }
