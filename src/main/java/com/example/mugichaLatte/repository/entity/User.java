@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Table(name = "users")
 public class User {
     /** ID */
     @Id
@@ -43,8 +44,8 @@ public class User {
 
     /**
      * 停止しているか
-     * 0 : 稼働
-     * 1 : 停止
+     * 0 : 停止
+     * 1 : 稼働
      */
     @Column(name = "is_stopped", nullable = false)
     private Integer isStopped;

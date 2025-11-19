@@ -37,8 +37,8 @@ public class LoginController {
     //★ログイン機能
     @PostMapping("/login")
     public ModelAndView doLogin(@ModelAttribute @Validated LoginForm loginForm,
-                                HttpSession session,
-                                BindingResult result){
+                                BindingResult result,
+                                HttpSession session){
 
         //FORMの中にエラーがあった場合抽出➡それを画面に渡す
         List<String> errorMessages = new ArrayList<>();
