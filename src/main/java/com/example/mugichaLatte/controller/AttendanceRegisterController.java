@@ -29,30 +29,30 @@ public class AttendanceRegisterController {
         return mav;
     }
 
-//    @PostMapping("/attendance/register")
-//    public ModelAndView register(@ModelAttribute @Validated AttendanceRegisterForm attendanceRegisterForm,
-//                                 BindingResult result,
-//                                 RedirectAttributes redirectAttributes,
-//                                 HttpSession session){
-//
-//        //FORMの中にエラーがあった場合抽出➡それを画面に渡す
-//        List<String> errorMessages = new ArrayList<>();
-//        if (result.hasErrors()){
-//            for(FieldError error : result.getFieldErrors()){
-//                errorMessages.add(error.getDefaultMessage());
-//            }
-//            ModelAndView mav = new ModelAndView("attendanceRegister");
-//            mav.addObject("errorMessages", errorMessages);
-//            mav.addObject("attendanceRegisterForm", attendanceRegisterForm);
-//            return mav;
-//        }
-//
-//        Integer userId = (Integer) session.getAttribute("loginUserId");
-//        if(attendanceRegisterService.isDuplicate(userId, attendanceRegisterForm.getDate())){
-//            errorMessages.add("日付が重複しています。編集したい場合は勤怠編集画面から操作してください。");
-//            ModelAndView mav = new ModelAndView("attendanceRegister");
-//            mav.addObject("errorMessages", errorMessages);
-//            return mav;
-//        }
-//    }
+    @PostMapping("/attendance/register")
+    public ModelAndView register(@ModelAttribute @Validated AttendanceRegisterForm attendanceRegisterForm,
+                                 BindingResult result,
+                                 RedirectAttributes redirectAttributes,
+                                 HttpSession session){
+
+        //FORMの中にエラーがあった場合抽出➡それを画面に渡す
+        List<String> errorMessages = new ArrayList<>();
+        if (result.hasErrors()){
+            for(FieldError error : result.getFieldErrors()){
+                errorMessages.add(error.getDefaultMessage());
+            }
+            ModelAndView mav = new ModelAndView("attendanceRegister");
+            mav.addObject("errorMessages", errorMessages);
+            mav.addObject("attendanceRegisterForm", attendanceRegisterForm);
+            return mav;
+        }
+
+        Integer userId = (Integer) session.getAttribute("loginUserId");
+        if(attendanceRegisterService.isDuplicate(userId, attendanceRegisterForm.getDate())){
+            errorMessages.add("日付が重複しています。編集したい場合は勤怠編集画面から操作してください。");
+            ModelAndView mav = new ModelAndView("attendanceRegister");
+            mav.addObject("errorMessages", errorMessages);
+            return mav;
+        }
+    }
 }

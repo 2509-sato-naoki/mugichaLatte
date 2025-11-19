@@ -7,10 +7,10 @@ import java.time.LocalDate;
 
 @Service
 public class AttendanceRegisterService {
-    //@Autowired
-    //AttendanceRepository attendanceRepository;
+    @Autowired
+    AttendanceRepository attendanceRepository;
 
-//    public boolean isDuplicate(Integer userId, String date) {
-//        return attendanceRepository.existsByUserIdAndDate(userId, LocalDate.parse(date));
-//    }
+    public boolean isDuplicate(Integer userId, String date) {
+        return attendanceRepository.existsByUserIdAndDate(userId, LocalDate.parse(date));
+    }
 }
