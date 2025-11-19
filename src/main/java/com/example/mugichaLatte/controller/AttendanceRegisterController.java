@@ -26,6 +26,7 @@ public class AttendanceRegisterController {
     @GetMapping("/attendance/register")
     public ModelAndView showRegisterForm(){
         ModelAndView mav = new ModelAndView("attendanceRegister");
+        mav.addObject(new AttendanceRegisterForm());
         return mav;
     }
 
@@ -52,6 +53,7 @@ public class AttendanceRegisterController {
             errorMessages.add("日付が重複しています。編集したい場合は勤怠編集画面から操作してください。");
             ModelAndView mav = new ModelAndView("attendanceRegister");
             mav.addObject("errorMessages", errorMessages);
+            mav.addObject("attendanceRegisterForm", attendanceRegisterForm);
             return mav;
         }
 
