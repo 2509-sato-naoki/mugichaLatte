@@ -1,6 +1,7 @@
 package com.example.mugichaLatte.controller;
 
 import com.example.mugichaLatte.controller.form.AttendanceRegisterForm;
+import com.example.mugichaLatte.repository.entity.User;
 import com.example.mugichaLatte.service.AttendanceRegisterService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,8 @@ public class AttendanceRegisterController {
             return mav;
         }
 
-        Integer userId = (Integer) session.getAttribute("loginUserId");
+        User user= (User) session.getAttribute("loginUser");
+        Integer userId = user.getId();
         if(attendanceRegisterService.isDuplicate(userId, attendanceRegisterForm.getDate())){
             errorMessages.add("日付が重複しています。編集したい場合は勤怠編集画面から操作してください。");
             ModelAndView mav = new ModelAndView("attendanceRegister");
