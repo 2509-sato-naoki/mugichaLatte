@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
@@ -79,7 +80,12 @@ public class AttendancesService {
         attendances.setRest(form.getRest());
         attendances.setStatus(form.getStatus());
         attendances.setMemo(form.getMemo());
-        attendances.setApprovalStatus(form.getApprovalStatus());
-        attendances.set
+        //attendances.setApprovalStatus(form.getApprovalStatus());
+        attendances.setUpdatedDate(LocalDateTime.now());
+        attendancesRepository.save(attendances);
+    }
+
+    public void deleteAttendances(int userId) {
+        attendancesRepository.deleteById(userId);
     }
 }

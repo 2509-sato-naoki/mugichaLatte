@@ -36,4 +36,5 @@ public class AttendancesEditForm {
     private String memo;
 
     private Integer approvalStatus;
+
 }

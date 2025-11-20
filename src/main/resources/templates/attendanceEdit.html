@@ -18,6 +18,8 @@
       th:object="${attendancesEditForm}" method="post">
     <div class="date" th:text="${attendancesEditForm.date}"></div>
     <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{userId}">
+    <input type="hidden" th:field="*{date}">
     <div>
         <label>勤務区分</label>
         <select th:field="*{workType}">
@@ -65,6 +67,10 @@
 
     <input type="submit" value="勤怠を編集する">
 </form>
+    <form th:action="@{/attendance-delete}" th:object="${attendancesEditForm}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <input type="submit" value="勤怠を削除する">
+    </form>
 
 </body>
 </html>
