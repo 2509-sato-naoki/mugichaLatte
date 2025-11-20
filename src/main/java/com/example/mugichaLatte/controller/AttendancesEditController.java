@@ -61,6 +61,7 @@ public class AttendancesEditController {
         } else {
             //編集処理
             return new ModelAndView("redirect:/home");
+            attendancesService.saveAttendances(form);
         }
     }
 }

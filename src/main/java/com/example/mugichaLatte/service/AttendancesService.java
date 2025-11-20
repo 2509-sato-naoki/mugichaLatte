@@ -67,4 +67,19 @@ public class AttendancesService {
         form.setApprovalStatus(attendances.getApprovalStatus());
         return form;
     }
+
+    public void saveAttendances(AttendancesEditForm form) {
+        Attendances attendances = new Attendances();
+        attendances.setId(form.getId());
+        attendances.setUserId(form.getUserId());
+        attendances.setDate(form.getDate());
+        attendances.setWorkType(form.getWorkType());
+        attendances.setStartTime(form.getStartTime());
+        attendances.setEndTime(form.getEndTime());
+        attendances.setRest(form.getRest());
+        attendances.setStatus(form.getStatus());
+        attendances.setMemo(form.getMemo());
+        attendances.setApprovalStatus(form.getApprovalStatus());
+        attendances.set
+    }
 }
