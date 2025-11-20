@@ -33,7 +33,7 @@
             th:with="att=${attendancesList[date.toString()]}"
             style="cursor:pointer;"
             th:onclick="${att != null} ?
-                'location.href=\'/mugichaLatte/attendance-edit/' + att.id + '\'' :
+                'location.href=\'/mugichaLatte/attendance-edit/' + ${att.id} + '\'' :
                 'location.href=\'/mugichaLatte/attendance/register\''">
                     <!-- 日付 -->
                     <td th:text="${date}"></td>

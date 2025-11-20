@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -45,6 +46,6 @@ public class Attendances {
     @Column(name = "approval_status")
     private int approvalStatus;
 
-//    private int workTime;
-
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
 }
