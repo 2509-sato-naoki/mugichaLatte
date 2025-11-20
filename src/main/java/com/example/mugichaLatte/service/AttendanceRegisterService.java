@@ -29,6 +29,7 @@ public class AttendanceRegisterService {
         attendances.setRest(attendanceRegisterForm.getRest() == null ? 0 :attendanceRegisterForm.getRest());
         attendances.setStatus(attendanceRegisterForm.getStatus() == null ? 0 :attendanceRegisterForm.getStatus());
         attendances.setApprovalStatus(0);
+        attendances.setMemo(attendanceRegisterForm.getMemo());
         attendanceRepository.save(attendances);
     }
 }
