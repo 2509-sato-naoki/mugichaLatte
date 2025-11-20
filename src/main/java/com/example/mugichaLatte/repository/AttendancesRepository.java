@@ -26,4 +26,6 @@ public interface AttendancesRepository extends JpaRepository<Attendances, Intege
 
     //重複チェック用
     boolean existsByUserIdAndDate(int userId, LocalDate date);
+    // 申請済かつ未承認の勤怠一覧
+    List<Attendances> findByStatusAndApprovalStatus(int status, int approvalStatus);
 }
