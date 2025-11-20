@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>承認者権限画面</title>
+    </head>
+    <body>
+        <h1>承認者権限画面</h1>
+
+        <!--メニュー-->
+        <a th:href="@{/home}">ホーム画面</a>
+
+        <!--エラーメッセージ-->
+        <div th:if="${errorMessages != null}">
+            <ul>
+                <li th:each="err : ${errorMessages}" th:text="${err}"></li>
+            </ul>
+        </div>
+
+        <!--勤怠一覧-->
+        <h2>承認待ち勤怠一覧</h2>
+        <form th:action="@{/approve}" method="post">
+            <table>
+                <tr>
+                    <th>日付</th>
+                    <th>勤務区分</th>
+                    <th>勤務開始時刻</th>
+                    <th>勤務終了時刻</th>
+                    <th>休憩時間</th>
+                    <th>メモ</th>
+                    <th>選択</th>
+                </tr>
+                <tr th:each="a : ${attendances}">
+                    <td th:text="${a.date}"></td>
+                    <td th:switch="${a.workType}">
+                        <span th:case="1">顧客業務（オンサイト）</span>
+                        <span th:case="2">顧客業務（オフサイト）</span>
+                        <span th:case="3">社内業務（オンサイト）</span>
+                        <span th:case="4">社内業務（オフサイト）</span>
+                        <span th:case="5">欠勤</span>
+                        <span th:case="6">有給休暇（全体）</span>
+                        <span th:case="7">有給休暇（半休）</span>
+                        <span th:case="8">代休</span>
+                        <span th:case="9">夏季休暇</span>
+                        <span th:case="10">忌引休暇</span>
+                    </td>
+                    <td th:text="${a.startTime}"></td>
+                    <td th:text="${a.endTime}"></td>
+                    <td th:text="${a.rest}"></td>
+                    <td th:text="${a.memo}"></td>
+                    <td><input type="checkbox" name="attendanceId" th:value="${a.id}"></td>
+                </tr>
+            </table>
+
+            <button type="submit" name="mode" value="permit">一括承認</button>
+            <button type="submit" name="mode" value="reject">一括差戻し</button>
+        </form>
+    </body>
+</html>
