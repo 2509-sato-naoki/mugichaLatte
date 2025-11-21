@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>管理者権限画面</h1>
+    <a th:href="@{/account-register}">アカウントを登録する</a>
+    <table>
+        <thead>
+            <tr>
+                <td>アカウント</td>
+                <td>氏名</td>
+                <td>部署</td>
+                <td>区分</td>
+                <td>ユーザー停止状態</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="u : ${userList}">
+                <!--アカウント-->
+                <td><p th:text="${u.account}"></p></td>
+
+                <!--氏名-->
+                <td><p th:text="${u.name}"></p></td>
+
+                <!--部署-->
+                <td><p th:text="${
+                    u.departmentId == 0 ? '人事部' :
+                    u.departmentId == 1 ? '総務部' :
+                    u.departmentId == 2 ? '営業部' :
+                    u.departmentId == 3 ? '技術部' :
+                    '不明'
+                }"></p></td>
+
+                <!--区分-->
+                <td><p th:text="${
+                    u.type == 0 ? '管理者' :
+                    u.type == 1 ? '承認者' :
+                    u.type == 2 ? '一般' :
+                    u.type == 3 ? '管理者兼承認者' :
+                    '不明'
+                }"></p></td>
+
+                <!--ユーザー停止状態-->
+                <td><p th:text="${
+                    u.isStopped == 0 ? '停止状態' :
+                    u.isStopped == 1 ? '稼働状態' :
+                    '不明'
+                }"></p>
+
+                    <form th:if="${u.isStopped == 0}" th:action="@{/isActived/{id}(id=${u.id})}" method="post">
+                        <button type="submit">復活する</button>
+                    </form>
+
+                    <form th:if="${u.isStopped == 1}" th:action="@{/isStopped/{id}(id=${u.id})}" method="post">
+                        <input type="hidden" value="u.id">
+                        <button type="submit">停止する</button>
+                    </form>
+                </td>
+
+                <td>
+                    <form th:action="@{/account-edit/{id}(id=${u.id})}" method="get">
+                        <button type="submit">編集する</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
