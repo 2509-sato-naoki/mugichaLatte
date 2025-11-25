@@ -18,14 +18,11 @@ public class AttendanceRegisterForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
-    @NotNull(message = "勤務区分を選択してください")
     private Integer workType;
 
-    @NotNull(message = "勤務開始時刻を入力してください")
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime startTime;
 
-    @NotNull(message = "勤務終了時刻を入力してください")
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime endTime;
 

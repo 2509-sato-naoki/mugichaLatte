@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 public class AttendanceRegisterService {
@@ -23,13 +24,17 @@ public class AttendanceRegisterService {
         Attendances attendances = new Attendances();
         attendances.setUserId(userId);
         attendances.setDate(attendanceRegisterForm.getDate());
-        attendances.setWorkType(attendanceRegisterForm.getWorkType());
+        attendances.setWorkType(
+                attendanceRegisterForm.getWorkType() == null ? 0 : attendanceRegisterForm.getWorkType()
+        );
         attendances.setStartTime(attendanceRegisterForm.getStartTime());
         attendances.setEndTime(attendanceRegisterForm.getEndTime());
         attendances.setRest(attendanceRegisterForm.getRest() == null ? 0 :attendanceRegisterForm.getRest());
         attendances.setStatus(attendanceRegisterForm.getStatus() == null ? 0 :attendanceRegisterForm.getStatus());
         attendances.setApprovalStatus(0);
         attendances.setMemo(attendanceRegisterForm.getMemo());
+        attendances.setUpdatedDate(LocalDateTime.now());
+
         attendanceRepository.save(attendances);
     }
 }

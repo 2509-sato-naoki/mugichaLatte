@@ -50,6 +50,23 @@ public class AttendancesEditController {
                 errorMessages.add(error.getDefaultMessage());
             }
         }
+
+        //休憩時間が勤務時間を超えていないかチェック（追加By林）
+        if (form.getStartTime() != null && form.getEndTime() != null) {
+
+            long workMinutes =
+                    java.time.Duration.between(
+                            form.getStartTime(),
+                            form.getEndTime()
+                    ).toMinutes();
+
+            int rest = (form.getRest() == null) ? 0 : form.getRest();
+
+            if (rest > workMinutes) {
+                errorMessages.add("休憩時間が勤務時間を超えています。正しい値を入力してください。");
+            }
+        }
+
         if (errorMessages.size() > 0) {
             //バリデーションエラーに引っかかった時の処理
             redirectAttributes.addFlashAttribute("errorMessages", errorMessages);

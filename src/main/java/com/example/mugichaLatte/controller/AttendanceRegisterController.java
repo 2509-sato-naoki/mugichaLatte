@@ -49,6 +49,27 @@ public class AttendanceRegisterController {
             return mav;
         }
 
+        //【追加】勤務時間＜休憩時間チェック
+        if (attendanceRegisterForm.getStartTime() != null &&
+                attendanceRegisterForm.getEndTime() != null) {
+
+            long workMinutes =
+                    java.time.Duration.between(
+                            attendanceRegisterForm.getStartTime(),
+                            attendanceRegisterForm.getEndTime()
+                    ).toMinutes();
+
+            int rest = attendanceRegisterForm.getRest() == null ? 0 : attendanceRegisterForm.getRest();
+
+            if (rest > workMinutes) {
+                errorMessages.add("休憩時間が勤務時間を超えています。正しい値を入力してください。");
+                ModelAndView mav = new ModelAndView("attendanceRegister");
+                mav.addObject("errorMessages", errorMessages);
+                mav.addObject("attendanceRegisterForm", attendanceRegisterForm);
+                return mav;
+            }
+        }
+
         User user= (User) session.getAttribute("loginUser");
         Integer userId = user.getId();
         if(attendanceRegisterService.isDuplicate(userId, attendanceRegisterForm.getDate())){
