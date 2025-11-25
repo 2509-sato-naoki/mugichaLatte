@@ -74,7 +74,9 @@ public class AttendancesService {
         attendances.setId(form.getId());
         attendances.setUserId(form.getUserId());
         attendances.setDate(form.getDate());
-        attendances.setWorkType(form.getWorkType());
+        attendances.setWorkType(
+                form.getWorkType() == null ? 0 : form.getWorkType()
+        );
         attendances.setStartTime(form.getStartTime());
         attendances.setEndTime(form.getEndTime());
         attendances.setRest(form.getRest());
