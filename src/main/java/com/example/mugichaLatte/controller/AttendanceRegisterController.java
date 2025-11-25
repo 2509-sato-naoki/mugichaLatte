@@ -43,10 +43,6 @@ public class AttendanceRegisterController {
             for(FieldError error : result.getFieldErrors()){
                 errorMessages.add(error.getDefaultMessage());
             }
-            ModelAndView mav = new ModelAndView("attendanceRegister");
-            mav.addObject("errorMessages", errorMessages);
-            mav.addObject("attendanceRegisterForm", attendanceRegisterForm);
-            return mav;
         }
 
         //【追加】勤務時間＜休憩時間チェック
@@ -63,17 +59,17 @@ public class AttendanceRegisterController {
 
             if (rest > workMinutes) {
                 errorMessages.add("休憩時間が勤務時間を超えています。正しい値を入力してください。");
-                ModelAndView mav = new ModelAndView("attendanceRegister");
-                mav.addObject("errorMessages", errorMessages);
-                mav.addObject("attendanceRegisterForm", attendanceRegisterForm);
-                return mav;
             }
         }
 
+        //日付重複チェック
         User user= (User) session.getAttribute("loginUser");
         Integer userId = user.getId();
         if(attendanceRegisterService.isDuplicate(userId, attendanceRegisterForm.getDate())){
             errorMessages.add("日付が重複しています。編集したい場合は勤怠編集画面から操作してください。");
+        }
+
+        if (!errorMessages.isEmpty()) {
             ModelAndView mav = new ModelAndView("attendanceRegister");
             mav.addObject("errorMessages", errorMessages);
             mav.addObject("attendanceRegisterForm", attendanceRegisterForm);
