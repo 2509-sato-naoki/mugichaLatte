@@ -25,8 +25,10 @@ public class AdminFilter extends OncePerRequestFilter {
 
         String path = request.getServletPath();
 
+        boolean isAdminPage =
+                path.equals("/admin") || path.startsWith("/account-edit") || path.equals("/account-register");
         // 管理者専用ページ以外ならスルー
-        if (!path.startsWith("/admin")) {
+        if (!isAdminPage) {
             filterChain.doFilter(request, response);
             return;
         }
