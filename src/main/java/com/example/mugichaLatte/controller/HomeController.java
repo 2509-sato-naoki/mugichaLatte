@@ -59,6 +59,7 @@ public class HomeController {
         mav.addObject("nextMonth", nextMonth);
         mav.addObject("attendancesList", attendancesList);
         mav.addObject("allDates", allDates);
+        mav.addObject("loginUser", user);
         mav.setViewName("home");
         return mav;
     }

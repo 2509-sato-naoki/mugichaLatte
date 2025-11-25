@@ -12,6 +12,10 @@
     <a th:href="@{/logout}">ログアウト</a>
     <!--パスワード変更画面-->
     <a th:href="@{/edit-password}">パスワード変更</a>
+    <!--管理者権限画面-->
+    <div th:if="${loginUser.type == 0}">
+        <a th:href="@{/admin}">管理者権限画面</a>
+    </div>
 
     <div th:if="${errorMessages != null}">
         <ul>

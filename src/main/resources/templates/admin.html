@@ -6,6 +6,8 @@
 </head>
 <body>
     <h1>管理者権限画面</h1>
+    <!--メニュー-->
+    <a th:href="@{/home}">ホーム画面</a>
     <a th:href="@{/account-register}">アカウントを登録する</a>
     <table>
         <thead>
@@ -51,11 +53,11 @@
                     '不明'
                 }"></p>
 
-                    <form th:if="${u.isStopped == 0}" th:action="@{/isActived/{id}(id=${u.id})}" method="post">
+                    <form th:if="${u.isStopped == 0}" th:action="@{/isActived/{id}(id=${u.id})}" method="post" onsubmit="return confirm('本当に復活させますか？');">
                         <button type="submit">復活する</button>
                     </form>
 
-                    <form th:if="${u.isStopped == 1}" th:action="@{/isStopped/{id}(id=${u.id})}" method="post">
+                    <form th:if="${u.isStopped == 1}" th:action="@{/isStopped/{id}(id=${u.id})}" method="post" onsubmit="return confirm('本当に停止しますか？');">
                         <input type="hidden" value="u.id">
                         <button type="submit">停止する</button>
                     </form>
