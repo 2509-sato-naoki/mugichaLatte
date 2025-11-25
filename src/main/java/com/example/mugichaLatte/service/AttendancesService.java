@@ -79,7 +79,7 @@ public class AttendancesService {
         );
         attendances.setStartTime(form.getStartTime());
         attendances.setEndTime(form.getEndTime());
-        attendances.setRest(form.getRest());
+        attendances.setRest(form.getRest() == null ? 0 :form.getRest());
         attendances.setStatus(form.getStatus());
         attendances.setMemo(form.getMemo());
         //attendances.setApprovalStatus(form.getApprovalStatus());
