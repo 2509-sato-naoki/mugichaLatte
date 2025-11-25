@@ -17,8 +17,11 @@ public class LoginUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
 
-        User user = userRepository.findByAccount(account)
-                .orElseThrow(() -> new UsernameNotFoundException("ユーザーが見つかりません"));
+        User user = userRepository.findByAccount(account);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("ユーザーが見つかりません");
+        }
 
         return new LoginUserDetails(user);
     }
