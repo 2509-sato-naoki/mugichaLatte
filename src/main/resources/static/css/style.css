@@ -1,3 +1,37 @@
-.contents {
+body {
+    background-color: #f2f2f2;
+}
 
+.contents {
+    padding: 0 20px; /* 横の余白 */
+    max-width: 1000px; /* 表示幅の長さの設定 */
+    margin: 0 auto; /* 真ん中に合わせる*/
+}
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.menu {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.button {
+    width: 120px;
+    height: 24px;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+}
+.button a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -9,32 +9,40 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>ホーム画面</h1>
-    <!--ログアウトボタン-->
-    <a th:href="@{/logout}">ログアウト</a>
-    <!--パスワード変更画面-->
-    <a th:href="@{/edit-password}">パスワード変更</a>
-    <!--管理者権限画面-->
-    <div th:if="${loginUser.type == 0}">
-        <a th:href="@{/admin}">管理者権限画面</a>
-    </div>
+    <div class="contents">
+        <h1>ホーム画面</h1>
 
-    <div th:if="${errorMessages != null}">
-        <ul>
-            <li th:each="err : ${errorMessages}" th:text="${err}"></li>
-        </ul>
-    </div>
-    <form th:action="@{/home}" th:object="${attendancesSearchForm}" method="get">
-        <input type="hidden" name="date" th:value="${prevMonth}">
-        <input type="submit" value="前月へ">
-    </form>
-    <form th:action="@{/home}" th:object="${attendancesSearchForm}" method="get">
-        <input type="hidden" name="date" th:value="${nextMonth}">
-        <input type="submit" value="翌月へ">
-    </form>
+        <div class="menu">
+            <!--ログアウトボタン-->
+            <div class="button">
+                <a th:href="@{/logout}">ログアウト</a>
+            </div>
+            <!--パスワード変更画面-->
+            <div class="button">
+                <a th:href="@{/edit-password}">パスワード変更</a>
+            </div>
+            <!--管理者権限画面-->
+            <div th:if="${loginUser.type == 0}" class="button">
+                <a th:href="@{/admin}">管理者権限画面</a>
+            </div>
+        </div>
 
-    <table>
-        <thead>
+        <div th:if="${errorMessages != null}">
+            <ul>
+                <li th:each="err : ${errorMessages}" th:text="${err}"></li>
+            </ul>
+        </div>
+        <form th:action="@{/home}" th:object="${attendancesSearchForm}" method="get">
+            <input type="hidden" name="date" th:value="${prevMonth}">
+            <input type="submit" value="前月へ">
+        </form>
+        <form th:action="@{/home}" th:object="${attendancesSearchForm}" method="get">
+            <input type="hidden" name="date" th:value="${nextMonth}">
+            <input type="submit" value="翌月へ">
+        </form>
+
+        <table>
+            <thead>
             <tr>
                 <td>日付</td>
                 <td>勤務区分</td>
@@ -44,20 +52,20 @@
                 <td>労働時間</td>
                 <td>メモ</td>
             </tr>
-        </thead>
-        <tbody>
-        <tr th:each="date : ${allDates}"
-            th:with="att=${attendancesList[date.toString()]}"
-            style="cursor:pointer;"
-            th:onclick="${att != null} ?
+            </thead>
+            <tbody>
+            <tr th:each="date : ${allDates}"
+                th:with="att=${attendancesList[date.toString()]}"
+                style="cursor:pointer;"
+                th:onclick="${att != null} ?
                 'location.href=\'/mugichaLatte/attendance-edit/' + ${att.id} + '\'' :
                 'location.href=\'/mugichaLatte/attendance/register\''">
-                    <!-- 日付 -->
-                    <td th:text="${date}"></td>
+                <!-- 日付 -->
+                <td th:text="${date}"></td>
 
-                    <!-- 勤務タイプ -->
-                    <td>
-                        <p th:text="${
+                <!-- 勤務タイプ -->
+                <td>
+                    <p th:text="${
                             att != null ?
                             (att.workType == 1 ? '顧客業務（オンサイト）' :
                              att.workType == 2 ? '顧客業務（オフサイト）' :
@@ -71,32 +79,33 @@
                              att.workType == 10 ? '忌引休暇' : '')
                             : ''
                         }"></p>
-                    </td>
+                </td>
 
-                    <!-- startTime -->
-                    <td>
-                        <p th:text="${att != null ? att.startTime : ''}" class="startTime"></p>
-                    </td>
+                <!-- startTime -->
+                <td>
+                    <p th:text="${att != null ? att.startTime : ''}" class="startTime"></p>
+                </td>
 
-                    <!-- endTime -->
-                    <td>
-                        <p th:text="${att != null ? att.endTime : ''}" class="endTime"></p>
-                    </td>
+                <!-- endTime -->
+                <td>
+                    <p th:text="${att != null ? att.endTime : ''}" class="endTime"></p>
+                </td>
 
-                    <!-- rest -->
-                    <td>
-                        <p th:text="${att != null ? att.rest : ''}" class="rest"></p>
-                    </td>
+                <!-- rest -->
+                <td>
+                    <p th:text="${att != null ? att.rest : ''}" class="rest"></p>
+                </td>
 
-                    <!-- workTime は JS 計算？ 空欄 -->
-                    <td class="workTime"></td>
+                <!-- workTime は JS 計算？ 空欄 -->
+                <td class="workTime"></td>
 
-                    <!-- memo -->
-                    <td>
-                        <p th:text="${att != null ? att.memo : ''}"></p>
-                    </td>
+                <!-- memo -->
+                <td>
+                    <p th:text="${att != null ? att.memo : ''}"></p>
+                </td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
