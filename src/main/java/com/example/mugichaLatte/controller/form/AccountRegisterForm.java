@@ -1,9 +1,6 @@
 package com.example.mugichaLatte.controller.form;
 
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
@@ -12,12 +9,11 @@ import java.time.LocalDateTime;
 @Setter
 public class AccountRegisterForm {
 
-    @Pattern.List({
-            @Pattern(regexp = "^[a-zA-Z0-9]{6,20}$",
-                    message = "アカウントは半角英数字かつ6文字以上20文字以内で入力してください。"),
-            @Pattern(regexp = "^(?![\\s　]*$).+$",
-                    message = "アカウントを入力してください。")
-    })
+    @NotBlank(message = "アカウントを入力してください。")
+    @Pattern(
+            regexp = "^$|^[a-zA-Z0-9]{6,20}$",
+            message = "アカウントは半角英数字かつ6文字以上20文字以内で入力してください。"
+    )
     private String account;
 
     @NotNull(message = "部署を選択してください")
@@ -28,7 +24,7 @@ public class AccountRegisterForm {
     private String name;
 
     @Pattern.List({
-            @Pattern(regexp = "^[\\x20-\\x7E]{8,20}$", message = "パスワードは半角文字かつ８文字以上20文字以下で入力してください。"),
+            @Pattern(regexp = "^$|^[\\x21-\\x7E]{8,20}$",message = "パスワードは半角文字かつ８文字以上20文字以下で入力してください。"),
             @Pattern(regexp = "^(?![\\s　]*$).+$", message = "パスワードを入力してください。")
     })
     private String password;

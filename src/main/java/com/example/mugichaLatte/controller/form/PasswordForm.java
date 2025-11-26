@@ -12,11 +12,9 @@ import lombok.Setter;
 public class PasswordForm {
 
     @Pattern.List({
-            @Pattern(regexp = "^[\\x20-\\x7E]+$", message = "パスワードは半角文字かつ８文字以上20文字以下で入力してください。"),
+            @Pattern(regexp = "^$|^[\\x21-\\x7E]{8,20}$",message = "パスワードは半角文字かつ８文字以上20文字以下で入力してください。"),
             @Pattern(regexp = "^(?![\\s　]*$).+$", message = "パスワードを入力してください。")
     })
-    @NotBlank(message = "パスワードを入力してください")
-    @Size(min = 8, max = 20, message = "パスワードは半角文字かつ８文字以上20文字以下で入力してください")
     private String password;
 
     private String passwordConfirm;
