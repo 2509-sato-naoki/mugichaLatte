@@ -9,6 +9,11 @@
     <!--メニュー-->
     <a th:href="@{/home}">ホーム画面</a>
     <a th:href="@{/account-register}">アカウントを登録する</a>
+    <div th:if="${errorMessages != null}">
+        <ul>
+            <li th:each="err : ${errorMessages}" th:text="${err}"></li>
+        </ul>
+    </div>
     <table>
         <thead>
             <tr>

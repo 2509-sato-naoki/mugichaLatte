@@ -55,6 +55,9 @@ public class AttendancesService {
     public AttendancesEditForm findAttendances(String id) {
         int attendancesId = Integer.parseInt(id);
         Attendances attendances = attendancesRepository.findById(attendancesId).orElse(null);
+        if (attendances == null) {
+            return null;
+        }
         AttendancesEditForm form = new AttendancesEditForm();
         form.setId(attendances.getId());
         form.setUserId(attendances.getUserId());

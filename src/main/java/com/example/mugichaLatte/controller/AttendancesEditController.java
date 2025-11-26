@@ -33,10 +33,22 @@ public class AttendancesEditController {
             return mav;
         }
 
-        //idに対応する勤怠記録をもっていってセットする
         AttendancesEditForm attendances = attendancesService.findAttendances(id);
+        if (attendances == null) {
+            redirectAttributes.addFlashAttribute("errorMessages", "指定された勤怠データは存在しません");
+            mav.setViewName("redirect:/home");
+            return mav;
+        }
+
+        //idに対応する勤怠記録をもっていってセットする
         mav.addObject("attendancesEditForm", attendances);
         return mav;
+    }
+
+    @GetMapping("attendance-edit/")
+    public ModelAndView redirectEmptyId(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMessages", "不正なパラメータが入力されました");
+        return new ModelAndView("redirect:/home");
     }
 
     @PostMapping("attendance-edit/")

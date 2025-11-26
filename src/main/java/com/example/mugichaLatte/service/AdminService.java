@@ -64,6 +64,9 @@ public class AdminService {
     public AccountEditForm findUserById(String id) {
         int userId = Integer.parseInt(id);
         User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            return null;
+        }
         AccountEditForm accountEditForm = new AccountEditForm();
         accountEditForm.setId(userId);
         accountEditForm.setAccount(user.getAccount());

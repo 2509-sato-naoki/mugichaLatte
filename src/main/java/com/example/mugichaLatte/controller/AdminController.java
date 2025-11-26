@@ -86,8 +86,20 @@ public class AdminController {
         }
 
         AccountEditForm form = adminService.findUserById(id);
+        if (form == null) {
+            redirectAttributes.addFlashAttribute("errorMessages", "指定されたアカウント情報は存在しません");
+            mav.setViewName("redirect:/admin");
+            return mav;
+        }
+
         mav.addObject("accountEditForm", form);
         return mav;
+    }
+
+    @GetMapping("account-edit/")
+    public ModelAndView redirectEmptyId(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMessages", "不正なパラメータが入力されました");
+        return new ModelAndView("redirect:/admin");
     }
 
     //アカウント編集処理
