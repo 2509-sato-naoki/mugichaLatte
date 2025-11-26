@@ -1,5 +1,6 @@
 package com.example.mugichaLatte.controller.form;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class LoginForm {
 
-    @Pattern(regexp = "^(?![\\s　]*$).+$", message = "アカウントを入力してください。")
+    @NotBlank(message = "アカウントを入力してください。")
     private String account;
 
     @Pattern(regexp = "^(?![\\s　]*$).+$", message = "パスワードを入力してください。")
