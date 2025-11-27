@@ -10,6 +10,19 @@
     <title>Title</title>
 </head>
 <body>
+    <header class="header">
+        <div class="left-contents">
+            勤怠管理
+        </div>
+        <div class="right-contents">
+            <div class="header-button">
+                <a th:href="@{/logout}">ログアウト</a>
+            </div>
+            <div class="header-button">
+
+            </div>
+        </div>
+    </header>
     <div class="contents">
         <h1>ホーム画面</h1>
 
@@ -33,14 +46,16 @@
                 <li th:each="err : ${errorMessages}" th:text="${err}"></li>
             </ul>
         </div>
-        <form th:action="@{/home}" th:object="${attendancesSearchForm}" method="get">
-            <input type="hidden" name="date" th:value="${prevMonth}">
-            <input type="submit" value="前月へ">
-        </form>
-        <form th:action="@{/home}" th:object="${attendancesSearchForm}" method="get">
-            <input type="hidden" name="date" th:value="${nextMonth}">
-            <input type="submit" value="翌月へ">
-        </form>
+        <div class="month-button">
+            <form th:action="@{/home}" th:object="${attendancesSearchForm}" method="get">
+                <input type="hidden" name="date" th:value="${prevMonth}">
+                <input type="submit" value="前月へ">
+            </form>
+            <form th:action="@{/home}" th:object="${attendancesSearchForm}" method="get">
+                <input type="hidden" name="date" th:value="${nextMonth}">
+                <input type="submit" value="翌月へ">
+            </form>
+        </div>
 
         <table>
             <thead>
@@ -60,7 +75,12 @@
                 style="cursor:pointer;"
                 th:onclick="${att != null} ?
                 'location.href=\'/mugichaLatte/attendance-edit/' + ${att.id} + '\'' :
-                'location.href=\'/mugichaLatte/attendance/register\''">
+                'location.href=\'/mugichaLatte/attendance/register\''"
+                th:classappend="${
+                    att != null and att.approvalStatus == 1 ? ' approved' :
+                    att != null and att.approvalStatus == 2 ? ' disapprove' : ''
+                }"
+                class="work-schedule">
                 <!-- 日付 -->
                 <td th:text="${date}"></td>
 
