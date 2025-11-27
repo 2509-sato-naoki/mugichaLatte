@@ -20,7 +20,7 @@
 }
 
 .login-wrapper form {
-    width: 300px;                /* フォーム全体の横幅 */
+    width: 100%;                /* フォーム全体の横幅 */
     display: flex;               /* 中身をflexboxにする */
     flex-direction: column;      /* 中の項目を縦並びに */
     gap: 12px;                   /* 項目同士の間に12pxの隙間を入れる */
@@ -32,7 +32,7 @@
     height: 40px;
     border: 1px solid #ccc;
     border-radius:5px;
-    width: 280px;
+    width: 100%;
 }
 
 .login-wrapper button {
