@@ -15,46 +15,5 @@
     width: 320px;
 }
 
-/* エラー */
-.login-wrapper ul {
-    background: #ffe5e5;         /* 薄い赤背景（エラーっぽさ） */
-    color: #b40000;              /* エラー文字色（濃い赤） */
-    padding: 12px 15px;          /* 内側の余白 */
-    border-radius: 6px;          /* 角丸で優しい見た目に */
-    margin-bottom: 18px;         /* 下の余白 */
-    width: 300px;                /* 横幅をフォームと合わせる */
-}
 
-/* フォーム */
-.login-wrapper form {
-    width: 300px;                /* フォーム全体の横幅 */
-    display: flex;               /* 中身をflexboxにする */
-    flex-direction: column;      /* 中の項目を縦並びに */
-    gap: 12px;                   /* 項目同士の間に12pxの隙間を入れる */
-}
 
-.login-wrapper label {
-    font-size: 16px;             /* ラベルの文字サイズ */
-    font-weight: bold;           /* 太字でわかりやすく */
-}
-
-.login-wrapper input {
-    padding: 10px 12px;          /* 内側の余白（入力しやすい） */
-    font-size: 14px;             /* 文字サイズ */
-    border-radius: 5px;          /* 角丸 */
-    border: 1px solid #ccc;      /* 薄いグレー枠 */
-    background: #fff;            /* 入力欄の背景を白に */
-}
-
-.login-wrapper button {
-    padding: 10px 0;             /* 上下の余白（ボタンの高さ） */
-    font-size: 15px;             /* ボタン文字サイズ */
-    border-radius: 6px;          /* 角丸 */
-    background: #0066ff;         /* 青背景（ログインボタンっぽい色） */
-    color: #fff;                 /* 文字色(白) */
-    border: none;                /* 枠線無しでシンプルに */
-}
-
-.login-wrapper button:hover {
-    background: #0052cc;         /* ホバー時に少し濃い青に変化（押せそう感UP） */
-}
