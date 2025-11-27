@@ -3,7 +3,9 @@ package com.example.mugichaLatte.controller;
 import com.example.mugichaLatte.controller.form.AttendancesEditForm;
 import com.example.mugichaLatte.controller.form.PasswordForm;
 import com.example.mugichaLatte.repository.entity.Attendances;
+import com.example.mugichaLatte.repository.entity.User;
 import com.example.mugichaLatte.service.AttendancesService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,9 +25,11 @@ public class AttendancesEditController {
 
     @GetMapping("attendance-edit/{id}")
     public ModelAndView attendancesEditContent(@PathVariable("id") String id,
-                                               RedirectAttributes redirectAttributes){
+                                               RedirectAttributes redirectAttributes,
+                                               HttpSession session){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("attendanceEdit");
+        User user = (User) session.getAttribute("loginUser");
         //IDが数字かどうか判断する処理
         if(!id.matches("\\d+")){
             redirectAttributes.addFlashAttribute("errorMessages", "不正なパラメータが入力されました");
@@ -41,6 +45,7 @@ public class AttendancesEditController {
         }
 
         //idに対応する勤怠記録をもっていってセットする
+        mav.addObject("loginUser", user);
         mav.addObject("attendancesEditForm", attendances);
         return mav;
     }

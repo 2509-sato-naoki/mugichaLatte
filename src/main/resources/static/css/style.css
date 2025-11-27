@@ -94,3 +94,32 @@ h1 {
 .contents {
     padding-top: 70px;
 }
+
+/* ヘッダー */
+.form-table {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-spacing: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.form-table tr {
+    height: 60px;
+}
+
+.form-table .first {
+    width: 30%;
+    background-color: #d3d3d3;
+    padding-left: 15px;
+    font-weight: 900;
+}
+.form-table .second {
+    width: 70%;
+    background-color: #fff;
+    padding: 0 15px;
+}
+.form-table .second input {
+    box-sizing: border-box;
+}
+.form-table .second select {
+}
