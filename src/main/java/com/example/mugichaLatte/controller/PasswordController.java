@@ -23,9 +23,12 @@ public class PasswordController {
     @Autowired
     PasswordService passwordService;
     @GetMapping("/edit-password")
-    public ModelAndView passwordContent(@ModelAttribute PasswordForm form) {
+    public ModelAndView passwordContent(@ModelAttribute PasswordForm form,
+                                        HttpSession session) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("password");
+        User user = (User) session.getAttribute("loginUser");
+        mav.addObject("loginUser", user);
         mav.addObject("passwordForm", form);
         return mav;
     }
@@ -48,6 +51,7 @@ public class PasswordController {
             return new ModelAndView("redirect:/home");
         } else {
             mav.addObject("errorMessages", errorMessages);
+            mav.addObject("loginUser", user);
             mav.setViewName("password");
             mav.addObject("passwordForm", form);
             return mav;

@@ -12,3 +12,6 @@
     font-size: 14px;
     font-weight: bold;
 }
+.form-table tr:last-child {
+    height: 132px;
+}
