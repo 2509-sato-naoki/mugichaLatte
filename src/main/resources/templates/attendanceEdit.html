@@ -44,14 +44,22 @@
 
     <form th:action="@{/attendance-edit/}"
           th:object="${attendancesEditForm}" method="post">
-
-        <div class="date" th:text="${attendancesEditForm.date}"></div>
         <input type="hidden" th:field="*{id}">
         <input type="hidden" th:field="*{userId}">
         <input type="hidden" th:field="*{date}">
 
         <table class="form-table">
             <tbody>
+                <tr>
+                    <td class="first">
+                        <!--フォームの名前-->
+                        日付
+                    </td>
+                    <td class="second" th:text="${attendancesEditForm.date}">
+                        <!--フォームタグはここに-->
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="first">
                         <!--フォームの名前-->
@@ -124,64 +132,21 @@
                     </td>
                     <td class="second">
                         <!--フォームタグはここに-->
-                        <textarea th:field="*{memo}"></textarea>
+                        <textarea th:field="*{memo}" rows="6"></textarea>
                     </td>
                 </tr>
             </tbody>
         </table>
-
-
-<!--        <div>-->
-<!--            <label>勤務区分</label>-->
-<!--            <select th:field="*{workType}">-->
-<!--                <option value="" th:selected="${workType == 0}">&#45;&#45;勤務区分を選択&#45;&#45;</option>-->
-<!--                <option value="1" th:selected="${workType == 1}">顧客業務（オンサイト）</option>-->
-<!--                <option value="2" th:selected="${workType == 2}">顧客業務（オフサイト）</option>-->
-<!--                <option value="3" th:selected="${workType == 3}">社内業務（オンサイト）</option>-->
-<!--                <option value="4" th:selected="${workType == 4}">社内業務（オフサイト）</option>-->
-<!--                &lt;!&ndash;            <option value="5" th:selected="${workType == 5}">欠勤</option>&ndash;&gt;-->
-<!--                &lt;!&ndash;            <option value="6" th:selected="${workType == 6}">有給休暇（全体）</option>&ndash;&gt;-->
-<!--                &lt;!&ndash;            <option value="7" th:selected="${workType == 7}">有給休暇（半休）</option>&ndash;&gt;-->
-<!--                &lt;!&ndash;            <option value="8" th:selected="${workType == 8}">代休</option>&ndash;&gt;-->
-<!--                &lt;!&ndash;            <option value="9" th:selected="${workType == 9}">有給休暇（半休）</option>&ndash;&gt;-->
-<!--                &lt;!&ndash;            <option value="10" th:selected="${workType == 10}">代休</option>&ndash;&gt;-->
-<!--            </select>-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label>勤務開始時刻</label><br>-->
-<!--            <input type="time" th:field="*{startTime}"><br>-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label>勤務終了時刻</label><br>-->
-<!--            <input type="time" th:field="*{endTime}"><br>-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label>休憩時間（分）</label><br>-->
-<!--            <input type="number" th:field="*{rest}" min="0">-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label>申請しますか？</label>-->
-<!--            <select th:field="*{status}">-->
-<!--                <option value="0" th:selected="${status == null}">申請しない</option>-->
-<!--                <option value="1" th:selected="${status == 1}">申請する</option>-->
-<!--            </select>-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label>メモ（50文字以内）</label>-->
-<!--            <textarea th:field="*{memo}"></textarea>-->
-<!--        </div>-->
-
-        <input type="submit" value="勤怠を編集する">
+        <div class="button-content">
+            <input type="submit" value="勤怠を編集する" class="button">
+        </div>
     </form>
-    <form th:action="@{/attendance-delete}" th:object="${attendancesEditForm}" method="post" onsubmit="return confirm('本当に削除しますか？');">
-        <input type="hidden" th:field="*{id}">
-        <input type="submit" value="勤怠を削除する">
-    </form>
+    <div class="delete-button-content">
+        <form th:action="@{/attendance-delete}" th:object="${attendancesEditForm}" method="post" onsubmit="return confirm('本当に削除しますか？');">
+            <input type="hidden" th:field="*{id}">
+            <input type="submit" value="勤怠を削除する" class="delete-button">
+        </form>
+    </div>
 </div>
 </body>
 </html>
