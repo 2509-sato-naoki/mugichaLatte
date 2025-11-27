@@ -28,7 +28,7 @@
         </div>
 
         <div th:if="${errorMessages != null}">
-            <ul>
+            <ul class="errorMessages">
                 <li th:each="err : ${errorMessages}" th:text="${err}"></li>
             </ul>
         </div>

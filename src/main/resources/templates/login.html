@@ -3,24 +3,31 @@
     <head>
         <meta charset="UTF-8">
         <title>ログイン画面</title>
+        <link th:href="@{/css/reset.css}" rel="stylesheet">
+        <link th:href="@{/css/style.css}" rel="stylesheet">
+        <link th:href="@{/css/login.css}" rel="stylesheet">
     </head>
     <body>
-        <h1>ログイン</h1>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <h1>ログイン</h1>
 
-        <!--エラーメッセージ-->
-        <div th:if="${errorMessages != null}">
-            <ul>
-                <li th:each="err : ${errorMessages}" th:text="${err}"></li>
-            </ul>
+            <!--エラーメッセージ-->
+            <div th:if="${errorMessages != null}">
+                <ul class="errorMessages">
+                    <li th:each="err : ${errorMessages}" th:text="${err}"></li>
+                </ul>
+            </div>
+
+            <!--入力フォーム-->
+            <form th:action="@{/login}" th:object="${loginForm}" method="post">
+                <label>アカウント</label>
+                <input type="text" th:field="*{account}"><br>
+                <label>パスワード</label>
+                <input type="password" th:field="*{password}"><br>
+                <button type="submit">ログイン</button>
+            </form>
         </div>
-
-        <!--入力フォーム-->
-        <form th:action="@{/login}" th:object="${loginForm}" method="post">
-            <label>アカウント</label>
-            <input type="text" th:field="*{account}"><br>
-            <label>パスワード</label>
-            <input type="password" th:field="*{password}"><br>
-            <button type="submit">ログイン</button>
-        </form>
+    </div>
     </body>
 </html>

@@ -35,3 +35,13 @@ h1 {
     justify-content: center;
     align-items: center;
 }
+/* エラーメッセージ全体の見た目 */
+.errorMessages {
+    color: #d32f2f;           /* 濃い赤（視認性の高い赤） */
+    background-color: #fdecea; /* 薄いピンクの背景*/
+    border: 1px solid #f5c6cb; /*枠線も淡い赤　solidは実線*/
+    border-radius: 4px;        /* 角を丸める */
+    padding: 8px 12px;         /* 余白 上下　左右*/
+    margin-bottom: 16px;       /* フォームとの間隔 「上」なら対応するのは margin-top*/
+    list-style-type: none;     /* 点（・）を消す */
+}
