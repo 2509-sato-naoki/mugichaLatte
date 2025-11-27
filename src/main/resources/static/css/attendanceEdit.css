@@ -1,0 +1,14 @@
+.delete-button-content {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.delete-button {
+    height: 60px;
+    border-radius: 30px;
+    width: 200px;
+    background-color: #FADBDA;
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight: bold;
+}
