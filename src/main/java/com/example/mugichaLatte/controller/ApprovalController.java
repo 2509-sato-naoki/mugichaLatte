@@ -1,7 +1,9 @@
 package com.example.mugichaLatte.controller;
 
 import com.example.mugichaLatte.repository.entity.Attendances;
+import com.example.mugichaLatte.repository.entity.User;
 import com.example.mugichaLatte.service.ApprovalService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +21,11 @@ public class ApprovalController {
     ApprovalService approvalService;
 
     @GetMapping("/approve")
-    public ModelAndView showApprovalList(){
+    public ModelAndView showApprovalList(HttpSession session){
         ModelAndView mav = new ModelAndView("approve");
         List<Attendances> list = approvalService.getApprovalList();
+        User user = (User) session.getAttribute("loginUser");
+        mav.addObject("loginUser", user);
         mav.addObject("attendances", list);
         return mav;
     }

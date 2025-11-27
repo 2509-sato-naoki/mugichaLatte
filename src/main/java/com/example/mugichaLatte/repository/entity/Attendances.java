@@ -48,4 +48,8 @@ public class Attendances {
 
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
 }

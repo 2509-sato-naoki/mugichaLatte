@@ -1,0 +1,91 @@
+table {
+    background-color: #fff;
+    width: 100%;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+}
+thead {
+    width: 100%;
+}
+tr {
+    width: 100%;
+}
+thead tr {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+    background-color: #f2f2f2;
+}
+thead th, thead td {
+    text-align: center;
+    padding: 10px 0;
+    border-right: 1px solid #ccc;
+}
+thead th:nth-child(1), tbody td:nth-child(1) { width: 10%; }
+
+/* 日付 */
+thead th:nth-child(2), tbody td:nth-child(2) { width: 10%; }
+
+/* 勤務区分 */
+thead th:nth-child(3), tbody td:nth-child(3) { width: 15%; }
+
+/* 開始 */
+thead th:nth-child(4), tbody td:nth-child(4) { width: 10%; }
+
+/* 終了 */
+thead th:nth-child(5), tbody td:nth-child(5) { width: 10%; }
+
+/* 休憩 */
+thead th:nth-child(6), tbody td:nth-child(6) { width: 10%; }
+
+/* メモ（広め 25%） */
+thead th:nth-child(7), tbody td:nth-child(7) { width: 25%; }
+
+/* チェックボックス */
+thead th:nth-child(8), tbody td:nth-child(8) { width: 10%; }
+
+tbody tr {
+    border-bottom: 1px solid #ccc;
+}
+tbody td {
+    padding: 15px 5px;
+    border-right: 1px solid #ccc;
+    text-align:center;
+    vertical-align:middle;
+}
+
+
+button[type="submit"] {
+    padding: 0 10px;
+    width: 200px;
+    height: 50px;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.submit-button {
+    display: flex;
+    justify-content: center;  /* 横方向の中央 */
+    gap: 20px;                /* ボタン同士の間隔 */
+    margin: 20px 0px;         /* 表の下に余白 */
+}
+
+button[type="submit"][value="reject"] {
+    background-color: #bdbdbd;   /* 少し濃いグレー */
+    color: #000;
+}
+
+input[type="checkbox"] {
+    appearance: auto !important;
+    -webkit-appearance: checkbox !important;
+    width: 16px;
+    height: 16px;
+    margin: 0 auto;
+    cursor: pointer;
+}
