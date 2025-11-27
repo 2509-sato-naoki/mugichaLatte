@@ -4,6 +4,7 @@ import com.example.mugichaLatte.controller.form.AccountEditForm;
 import com.example.mugichaLatte.controller.form.AccountRegisterForm;
 import com.example.mugichaLatte.repository.entity.User;
 import com.example.mugichaLatte.service.AdminService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,20 +25,25 @@ public class AdminController {
     @Autowired
     AdminService adminService;
     @GetMapping("admin")
-    public ModelAndView adminContents() {
+    public ModelAndView adminContents(HttpSession session) {
+        User user = (User) session.getAttribute("loginUser");
         ModelAndView mav = new ModelAndView();
         mav.setViewName("admin");
 
         List<User> userList = new ArrayList<>();
         userList = adminService.findAllUser();
+        mav.addObject("loginUser", user);
         mav.addObject("userList", userList);
         return mav;
     }
 
     //アカウント登録画面表示
     @GetMapping("account-register")
-    public ModelAndView accountRegisterContent(AccountRegisterForm form) {
+    public ModelAndView accountRegisterContent(AccountRegisterForm form,
+                                               HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        User user = (User) session.getAttribute("loginUser");
+        mav.addObject("loginUser", user);
         mav.addObject("accountRegisterForm", form);
         mav.setViewName("accountRegister");
         return mav;
@@ -46,8 +52,9 @@ public class AdminController {
     //アカウント登録処理
     @PostMapping("account-register")
     public ModelAndView accountRegister(@ModelAttribute @Validated AccountRegisterForm form,
-                                        BindingResult result
+                                        BindingResult result, HttpSession session
                                         ) {
+        User user = (User) session.getAttribute("loginUser");
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
         if (result.hasErrors()) {
@@ -61,6 +68,7 @@ public class AdminController {
         }
         if (errorMessages.size() > 0) {
             mav.addObject("errorMessages", errorMessages);
+            mav.addObject("loginUser", user);
             mav.addObject("accountRegisterForm", form);
             mav.setViewName("accountRegister");
             return mav;
@@ -74,7 +82,9 @@ public class AdminController {
     //アカウント編集画面表示処理
     @GetMapping("account-edit/{id}")
     public ModelAndView accountEditContent(@PathVariable("id") String id,
-                                           RedirectAttributes redirectAttributes) {
+                                           RedirectAttributes redirectAttributes,
+                                           HttpSession session) {
+        User user = (User) session.getAttribute("loginUser");
         ModelAndView mav = new ModelAndView();
         mav.setViewName("accountEdit");
 
@@ -92,6 +102,7 @@ public class AdminController {
             return mav;
         }
 
+        mav.addObject("loginUser", user);
         mav.addObject("accountEditForm", form);
         return mav;
     }
@@ -105,7 +116,9 @@ public class AdminController {
     //アカウント編集処理
     @PostMapping("account-edit")
     public ModelAndView accountEdit(@ModelAttribute @Validated AccountEditForm form,
-                                    BindingResult result) {
+                                    BindingResult result,
+                                    HttpSession session) {
+        User user = (User) session.getAttribute("loginUser");
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
         if (result.hasErrors()) {
@@ -119,6 +132,7 @@ public class AdminController {
         }
         if (errorMessages.size() > 0) {
             mav.addObject("errorMessages", errorMessages);
+            mav.addObject("loginUser", user);
             mav.addObject("accountEditForm", form);
             mav.setViewName("accountEdit");
             return mav;

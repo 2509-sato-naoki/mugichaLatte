@@ -3,19 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/css/reset.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/admin.css}" rel="stylesheet">
 </head>
 <body>
-    <h1>管理者権限画面</h1>
-    <!--メニュー-->
-    <a th:href="@{/home}">ホーム画面</a>
-    <a th:href="@{/account-register}">アカウントを登録する</a>
-    <div th:if="${errorMessages != null}">
-        <ul class="errorMessages">
-            <li th:each="err : ${errorMessages}" th:text="${err}"></li>
-        </ul>
-    </div>
-    <table>
-        <thead>
+    <header class="header">
+        <div class="first-contents">
+            勤怠管理
+        </div>
+        <div class="second-contents">
+            <div class="header-button">
+                <a th:href="@{/home}">ホーム</a>
+            </div>
+            <div class="header-button">
+                <a th:href="@{/logout}">ログアウト</a>
+            </div>
+            <div class="header-button">
+                <a th:href="@{/edit-password}">パスワード変更</a>
+            </div>
+            <div class="header-button" th:if="${loginUser.type == 0 || loginUser.type == 3}">
+                <a th:href="@{/admin}">管理者権限画面</a>
+            </div>
+            <div class="header-button" th:if="${loginUser.type == 1 || loginUser.type == 3}">
+                <a th:href="@{/approve}">承認者権限画面</a>
+            </div>
+        </div>
+        <div class="third-contents">
+            <p th:text="${loginUser.name}"></p>
+        </div>
+    </header>
+
+    <div class="contents">
+        <h1>管理者権限画面</h1>
+
+        <div class="admin_button"><a th:href="@{/account-register}">アカウントを登録する</a></div>
+        <div th:if="${errorMessages != null}">
+            <ul class="errorMessages">
+                <li th:each="err : ${errorMessages}" th:text="${err}"></li>
+            </ul>
+        </div>
+        <table>
+            <thead>
             <tr>
                 <td>アカウント</td>
                 <td>氏名</td>
@@ -24,8 +53,8 @@
                 <td>ユーザー停止状態</td>
                 <td></td>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr th:each="u : ${userList}">
                 <!--アカウント-->
                 <td><p th:text="${u.account}"></p></td>
@@ -59,22 +88,24 @@
                 }"></p>
 
                     <form th:if="${u.isStopped == 0}" th:action="@{/isActived/{id}(id=${u.id})}" method="post" onsubmit="return confirm('本当に復活させますか？');">
-                        <button type="submit">復活する</button>
+                        <button type="submit" class="active-button">復活する</button>
                     </form>
 
                     <form th:if="${u.isStopped == 1}" th:action="@{/isStopped/{id}(id=${u.id})}" method="post" onsubmit="return confirm('本当に停止しますか？');">
                         <input type="hidden" value="u.id">
-                        <button type="submit">停止する</button>
+                        <button type="submit" class="stop-button">停止する</button>
                     </form>
                 </td>
 
                 <td>
                     <form th:action="@{/account-edit/{id}(id=${u.id})}" method="get">
-                        <button type="submit">編集する</button>
+                        <button type="submit" class="edit-button">編集する</button>
                     </form>
                 </td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>

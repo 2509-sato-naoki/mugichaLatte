@@ -3,61 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/css/reset.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
-    <h1>アカウント登録画面</h1>
-    <a th:href="@{/admin}">管理者権限画面</a>
-    <!--エラーメッセージ-->
-    <div th:if="${errorMessages != null}">
-        <ul class="errorMessages">
-            <li th:each="err : ${errorMessages}" th:text="${err}"></li>
-        </ul>
+    <header class="header">
+        <div class="first-contents">
+            勤怠管理
+        </div>
+        <div class="second-contents">
+            <div class="header-button">
+                <a th:href="@{/home}">ホーム</a>
+            </div>
+            <div class="header-button">
+                <a th:href="@{/logout}">ログアウト</a>
+            </div>
+            <div class="header-button">
+                <a th:href="@{/edit-password}">パスワード変更</a>
+            </div>
+            <div class="header-button" th:if="${loginUser.type == 0 || loginUser.type == 3}">
+                <a th:href="@{/admin}">管理者権限画面</a>
+            </div>
+            <div class="header-button" th:if="${loginUser.type == 1 || loginUser.type == 3}">
+                <a th:href="@{/approve}">承認者権限画面</a>
+            </div>
+        </div>
+        <div class="third-contents">
+            <p th:text="${loginUser.name}"></p>
+        </div>
+    </header>
+
+    <div class="contents">
+        <h1>アカウント登録画面</h1>
+        <!--エラーメッセージ-->
+        <div th:if="${errorMessages != null}">
+            <ul class="errorMessages">
+                <li th:each="err : ${errorMessages}" th:text="${err}"></li>
+            </ul>
+        </div>
+
+        <form method="post" th:action="@{account-register}" th:object="${accountRegisterForm}">
+            <table class="form-table">
+                <tbody>
+                    <tr>
+                        <td class="first">
+                            <!--フォームの名前-->
+                            アカウント
+                        </td>
+                        <td class="second">
+                            <!--フォームタグはここに-->
+                            <input type="text" th:field="*{account}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">
+                            <!--フォームの名前-->
+                            名前
+                        </td>
+                        <td class="second">
+                            <!--フォームタグはここに-->
+                            <input type="text" th:field="*{name}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">
+                            <!--フォームの名前-->
+                            部署
+                        </td>
+                        <td class="second">
+                            <!--フォームタグはここに-->
+                            <select th:field="*{departmentId}">
+                                <option value="">選択してください</option>
+                                <option value="0">人事部</option>
+                                <option value="1">総務部</option>
+                                <option value="2">営業部</option>
+                                <option value="3">技術部</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">
+                            <!--フォームの名前-->
+                            区分
+                        </td>
+                        <td class="second">
+                            <!--フォームタグはここに-->
+                            <select th:field="*{type}">
+                                <option value="">選択してください</option>
+                                <option value="0">管理者</option>
+                                <option value="1">承認者</option>
+                                <option value="2">一般</option>
+                                <option value="3">管理者兼承認者</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">
+                            <!--フォームの名前-->
+                            パスワード
+                        </td>
+                        <td class="second">
+                            <!--フォームタグはここに-->
+                            <input type="password" th:field="*{password}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">
+                            <!--フォームの名前-->
+                            パスワード（確認用）
+                        </td>
+                        <td class="second">
+                            <!--フォームタグはここに-->
+                            <input type="password" th:field="*{passwordConfirm}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="button-content">
+                <input type="submit" value="アカウントを登録する" class="button">
+            </div>
+        </form>
     </div>
-
-    <form method="post" th:action="@{account-register}" th:object="${accountRegisterForm}">
-        <div>
-            <label>アカウント</label>
-            <input type="text" th:field="*{account}">
-        </div>
-
-        <div>
-            <label>名前</label>
-            <input type="text" th:field="*{name}">
-        </div>
-
-        <div>
-            <label>部署</label>
-            <select th:field="*{departmentId}">
-                <option value="">選択してください</option>
-                <option value="0">人事部</option>
-                <option value="1">総務部</option>
-                <option value="2">営業部</option>
-                <option value="3">技術部</option>
-            </select>
-        </div>
-
-        <div>
-            <label>区分</label>
-            <select th:field="*{type}">
-                <option value="">選択してください</option>
-                <option value="0">管理者</option>
-                <option value="1">承認者</option>
-                <option value="2">一般</option>
-                <option value="3">管理者兼承認者</option>
-            </select>
-        </div>
-
-        <div>
-            <label>パスワード</label>
-            <input type="password" th:field="*{password}">
-        </div>
-
-        <div>
-            <label>パスワード（確認用）</label>
-            <input type="password" th:field="*{passwordConfirm}">
-        </div>
-
-        <input type="submit" value="アカウントを登録する">
-    </form>
 </body>
 </html>
