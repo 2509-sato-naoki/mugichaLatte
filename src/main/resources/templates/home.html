@@ -11,35 +11,29 @@
 </head>
 <body>
     <header class="header">
-        <div class="left-contents">
+        <div class="first-contents">
             勤怠管理
         </div>
-        <div class="right-contents">
+        <div class="second-contents">
             <div class="header-button">
                 <a th:href="@{/logout}">ログアウト</a>
             </div>
             <div class="header-button">
-
+                <a th:href="@{/edit-password}">パスワード変更</a>
             </div>
+            <div class="header-button" th:if="${loginUser.type == 0 || loginUser.type == 3}">
+                <a th:href="@{/admin}">管理者権限画面</a>
+            </div>
+            <div class="header-button" th:if="${loginUser.type == 1 || loginUser.type == 3}">
+                <a th:href="@{/approve}">承認者権限画面</a>
+            </div>
+        </div>
+        <div class="third-contents">
+            <p th:text="${loginUser.name}"></p>
         </div>
     </header>
     <div class="contents">
         <h1>ホーム画面</h1>
-
-        <div class="menu">
-            <!--ログアウトボタン-->
-            <div class="button">
-                <a th:href="@{/logout}">ログアウト</a>
-            </div>
-            <!--パスワード変更画面-->
-            <div class="button">
-                <a th:href="@{/edit-password}">パスワード変更</a>
-            </div>
-            <!--管理者権限画面-->
-            <div th:if="${loginUser.type == 0}" class="button">
-                <a th:href="@{/admin}">管理者権限画面</a>
-            </div>
-        </div>
 
         <div th:if="${errorMessages != null}">
             <ul class="errorMessages">
