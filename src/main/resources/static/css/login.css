@@ -1,0 +1,19 @@
+/*外側*/
+.login-wrapper {
+    height: 100vh;           /* 画面の高さを要素の高さにする*/
+    display: flex;               /*flexが使えるようにするレイアウトの仕組み。*/
+    justify-content: center;     /*縦方向に中央寄せ*/
+    align-items: center;         /*横方向に中央寄せ*/
+    background: #f2f2f2;         /*背景色を薄いグレーにする*/
+}
+
+/*内側*/
+.login-card {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 320px;
+}
+
+
+
