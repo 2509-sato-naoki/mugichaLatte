@@ -6,6 +6,8 @@ import com.example.mugichaLatte.repository.UserRepository;
 import com.example.mugichaLatte.repository.entity.User;
 import com.example.mugichaLatte.utils.CipherUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,8 +18,8 @@ public class AdminService {
 
     @Autowired
     UserRepository userRepository;
-    public List<User> findAllUser() {
-        return userRepository.findAllUserOrderById();
+    public Page<User> findAllUser(Pageable pageable) {
+        return userRepository.findAllUserOrderById(pageable);
     }
 
     //アカウントを登録するときのアカウント重複チェック
