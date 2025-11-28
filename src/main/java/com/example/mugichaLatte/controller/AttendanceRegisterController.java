@@ -12,9 +12,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +27,16 @@ public class AttendanceRegisterController {
     AttendanceRegisterService attendanceRegisterService;
 
     @GetMapping("/attendance/register")
-    public ModelAndView showRegisterForm(HttpSession session){
+    public ModelAndView showRegisterForm(@RequestParam (value = "date", required = false) LocalDate date,
+                                         HttpSession session){
         ModelAndView mav = new ModelAndView("attendanceRegister");
         User user = (User) session.getAttribute("loginUser");
+        AttendanceRegisterForm form = new AttendanceRegisterForm();
+        if (date != null) {
+            form.setDate(date);
+        }
         mav.addObject("loginUser", user);
-        mav.addObject(new AttendanceRegisterForm());
+        mav.addObject("attendanceRegisterForm", form);
         return mav;
     }
 

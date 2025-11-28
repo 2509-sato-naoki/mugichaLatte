@@ -82,12 +82,13 @@ public class AdminService {
     }
 
     public void editAccount(AccountEditForm form) {
-        User user = new User();
-        user.setId(form.getId());
+        User user = userRepository.findById(form.getId()).orElse(null);
         user.setAccount(form.getAccount());
         user.setName(form.getName());
         //パスワードはハッシュ化
-        user.setPassword(CipherUtil.encrypt(form.getPassword()));
+        if (form.getPassword() != null && !form.getPassword().isBlank()) {
+            user.setPassword(CipherUtil.encrypt(form.getPassword()));
+        }
         user.setType(form.getType());
         user.setDepartmentId(form.getDepartmentId());
         user.setCreatedDate(form.getCreatedDate());
