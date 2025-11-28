@@ -37,6 +37,18 @@
 
             <!--勤怠一覧-->
             <h1>承認待ち勤怠一覧</h1>
+            <!-- 現在ログイン中の承認者の部署を表示 -->
+            <div class="current-dept">
+                <span>承認対象部署：</span>
+
+                <span th:switch="${loginUser.departmentId}">
+                    <span th:case="0">人事部</span>
+                    <span th:case="1">総務部</span>
+                    <span th:case="2">営業部</span>
+                    <span th:case="3">技術部</span>
+                </span>
+            </div>
+
 
             <!--エラーメッセージ-->
             <div th:if="${errorMessages != null}">
