@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -29,16 +30,17 @@ public class HomeController {
         User user = (User) session.getAttribute("loginUser");
         Map<String, Attendances> attendancesList = attendancesService.findAllAttendances(form, user.getId());
 
-        LocalDate prevMonth = null;
-        LocalDate nextMonth = null;
+        YearMonth prevMonth = null;
+        YearMonth nextMonth = null;
         List<LocalDate> allDates = new ArrayList<>();
         if (form.getDate() == null) {
             // 今月の最初の日
             LocalDate firstDay = now.with(TemporalAdjusters.firstDayOfMonth());
             // 今月の最後の日
             LocalDate lastDay = now.with(TemporalAdjusters.lastDayOfMonth());
-            prevMonth = LocalDate.now().minusMonths(1);
-            nextMonth = LocalDate.now().plusMonths(1);
+            prevMonth = YearMonth.now().minusMonths(1);
+            nextMonth = YearMonth.now().plusMonths(1);
+
             //月の日にちをすべて格納する
             for (LocalDate date = firstDay; !date.isAfter(lastDay); date = date.plusDays(1)) {
                 allDates.add(date);
@@ -46,13 +48,9 @@ public class HomeController {
         } else {
             prevMonth = form.getDate().minusMonths(1);
             nextMonth = form.getDate().plusMonths(1);
-            // 検索月の最初の日
-            LocalDate firstDay = form.getDate().with(TemporalAdjusters.firstDayOfMonth());
-            // 検索月の最後の日
-            LocalDate lastDay = form.getDate().with(TemporalAdjusters.lastDayOfMonth());
-            //月の日にちをすべて格納する
-            for (LocalDate date = firstDay; !date.isAfter(lastDay); date = date.plusDays(1)) {
-                allDates.add(date);
+
+            for (int day = 1; day <= form.getDate().lengthOfMonth(); day++) {
+                allDates.add(form.getDate().atDay(day));
             }
         }
         mav.addObject("prevMonth", prevMonth);

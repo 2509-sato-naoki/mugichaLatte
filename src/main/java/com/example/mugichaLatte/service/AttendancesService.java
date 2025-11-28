@@ -36,10 +36,9 @@ public class AttendancesService {
             return dateToAttendance;
 
         } else {
-            // 検索月の最初の日
-            LocalDate firstDay = form.getDate().with(TemporalAdjusters.firstDayOfMonth());
-            // 検索月の最後の日
-            LocalDate lastDay = form.getDate().with(TemporalAdjusters.lastDayOfMonth());
+            // 月初・月末のLocalDateを作る
+            LocalDate firstDay = form.getDate().atDay(1);                 // 月の最初の日
+            LocalDate lastDay = form.getDate().atEndOfMonth();           // 月の最後の日
 
             //リストで月の勤怠記録を取得
             List<Attendances> attendancesList= attendancesRepository.findAllAttendances(firstDay, lastDay, userId);
