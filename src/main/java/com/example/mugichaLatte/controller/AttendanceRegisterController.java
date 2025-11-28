@@ -25,8 +25,10 @@ public class AttendanceRegisterController {
     AttendanceRegisterService attendanceRegisterService;
 
     @GetMapping("/attendance/register")
-    public ModelAndView showRegisterForm(){
+    public ModelAndView showRegisterForm(HttpSession session){
         ModelAndView mav = new ModelAndView("attendanceRegister");
+        User user = (User) session.getAttribute("loginUser");
+        mav.addObject("loginUser", user);
         mav.addObject(new AttendanceRegisterForm());
         return mav;
     }
@@ -71,6 +73,7 @@ public class AttendanceRegisterController {
 
         if (!errorMessages.isEmpty()) {
             ModelAndView mav = new ModelAndView("attendanceRegister");
+            mav.addObject("loginUser", user);
             mav.addObject("errorMessages", errorMessages);
             mav.addObject("attendanceRegisterForm", attendanceRegisterForm);
             return mav;

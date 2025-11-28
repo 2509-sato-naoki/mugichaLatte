@@ -5,62 +5,117 @@
         <title>勤怠登録</title>
         <link th:href="@{/css/reset.css}" rel="stylesheet">
         <link th:href="@{/css/style.css}" rel="stylesheet">
+        <link th:href="@{/css/attendanceRegister.css}" rel="stylesheet">
     </head>
 
     <body>
-        <h1>勤怠登録</h1>
-        <!--メニュー-->
-        <a th:href="@{/home}">ホーム画面</a>
+        <header class="header">
+            <div class="first-contents">
+                勤怠管理
+            </div>
+            <div class="second-contents">
+                <div class="header-button">
+                    <a th:href="@{/home}">ホーム</a>
+                </div>
+                <div class="header-button">
+                    <a th:href="@{/logout}">ログアウト</a>
+                </div>
+                <div class="header-button">
+                    <a th:href="@{/edit-password}">パスワード変更</a>
+                </div>
+                <div class="header-button" th:if="${loginUser.type == 0 || loginUser.type == 3}">
+                    <a th:href="@{/admin}">管理者権限画面</a>
+                </div>
+                <div class="header-button" th:if="${loginUser.type == 1 || loginUser.type == 3}">
+                    <a th:href="@{/approve}">承認者権限画面</a>
+                </div>
+            </div>
+            <div class="third-contents">
+                <p th:text="${loginUser.name}"></p>
+            </div>
+        </header>
+        <div class="contents">
+            <h1>勤怠登録</h1>
 
-        <!--エラーメッセージ-->
-        <div th:if="${errorMessages != null}">
-            <ul class="errorMessages">
-                <li th:each="err : ${errorMessages}" th:text="${err}"></li>
-            </ul>
+            <!--エラーメッセージ-->
+            <div th:if="${errorMessages != null}">
+                <ul class="errorMessages">
+                    <li th:each="err : ${errorMessages}" th:text="${err}"></li>
+                </ul>
+            </div>
+
+            <!--入力フォーム-->
+            <form th:action="@{/attendance/register}" method="post" th:object="${attendanceRegisterForm}">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <td class="first">
+                                <!--フォームの名前-->
+                                日付
+                            </td>
+                            <td class="second">
+                                <input type="date" th:field="*{date}">
+                            </td>
+                        </tr>
+
+
+                    <!--勤務区分-->
+                        <tr>
+                            <td class="first">勤務区分</td>
+                            <td class="second">
+                                <select th:field="*{workType}">
+                                    <option value="">選択してください</option>
+                                    <option value="1">顧客営業（オンサイト）</option>
+                                    <option value="2">顧客営業（オフサイト）</option>
+                                    <option value="3">社内業務（オンサイト）</option>
+                                    <option value="4">社内業務（オフサイト）</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                    <!--勤務開始時刻-->
+                        <tr>
+                            <td class="first">勤務開始時刻</td>
+                            <td class="second"><input type="time" th:field="*{startTime}"></td>
+                        </tr>
+
+                    <!--勤務終了時刻-->
+                        <tr>
+                            <td class="first">勤務終了時刻</td>
+                            <td class="second"><input type="time" th:field="*{endTime}"></td>
+                        </tr>
+
+                    <!--休憩時間-->
+                        <tr>
+                            <td class="first">休憩時間（分）</td>
+                            <td class="second"><input type="number" th:field="*{rest}" min="0"></td>
+                        </tr>
+
+                    <!--申請ステータス-->
+                        <tr>
+                            <td class="first">申請しますか？</td>
+                            <td class="second">
+                                <select th:field="*{status}">
+                                    <option value="0">申請しない</option>
+                                    <option value="1">申請する</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <!--メモ-->
+                        <tr>
+                            <td class="first">メモ（50文字以内）</td>
+                            <td class="second">
+                                <textarea th:field="*{memo}" rows="6"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="button-content">
+                    <button type="submit" class="button">登録</button>
+                </div>
+            </form>
         </div>
-
-        <!--入力フォーム-->
-        <form th:action="@{/attendance/register}" method="post" th:object="${attendanceRegisterForm}">
-
-            <!--日付-->
-            <label>日付</label><br>
-            <input type="date" th:field="*{date}"><br>
-
-            <!--勤務区分-->
-            <label>勤務区分</label><br>
-            <select th:field="*{workType}">
-                <option value="">選択してください</option>
-                <option value="1">顧客営業（オンサイト）</option>
-                <option value="2">顧客営業（オフサイト）</option>
-                <option value="3">社内業務（オンサイト）</option>
-                <option value="4">社内業務（オフサイト）</option>
-            </select><br>
-
-            <!--勤務開始時刻-->
-            <label>勤務開始時刻</label><br>
-            <input type="time" th:field="*{startTime}"><br>
-
-            <!--勤務終了時刻-->
-            <label>勤務終了時刻</label><br>
-            <input type="time" th:field="*{endTime}"><br>
-
-            <!--休憩時間-->
-            <label>休憩時間（分）</label><br>
-            <input type="number" th:field="*{rest}" min="0"><br>
-
-            <!--申請ステータス-->
-            <label>申請しますか？</label><br>
-            <select th:field="*{status}">
-                <option value="0">申請しない</option>
-                <option value="1">申請する</option>
-            </select><br>
-
-            <!--メモ-->
-            <label>メモ（50文字以内）</label><br>
-
-            <!--ボタン-->
-            <textarea th:field="*{memo}"></textarea><br>
-            <button type="submit">登録</button>
-        </form>
     </body>
 </html>
