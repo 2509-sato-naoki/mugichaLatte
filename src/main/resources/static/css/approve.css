@@ -90,3 +90,10 @@ input[type="checkbox"] {
     margin: 0 auto;
     cursor: pointer;
 }
+
+.current-dept {
+    margin: 15px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
