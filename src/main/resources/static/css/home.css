@@ -100,3 +100,18 @@ input[type="submit"] {
     color: #000;
     border: 1px solid #ccc;
 }
+
+.account-info {
+    width: 40%;
+    margin-bottom: 20px;
+}
+.account-table {
+    border: 1px solid #ccc;
+}
+.account-table thead {
+    background-color: #f2f2f2;
+
+}
+.account-table td {
+    padding: 6px 0;
+}

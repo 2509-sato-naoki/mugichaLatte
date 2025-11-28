@@ -38,6 +38,37 @@
     <div class="contents">
         <h1>ホーム画面</h1>
 
+        <!--ユーザ情報表示-->
+        <div class="account-info">
+            <table class="account-table">
+                <thead>
+                    <tr>
+                        <td>名前</td>
+                        <td>部署</td>
+                        <td>区分</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${loginUser.name}"></td>
+                        <td th:text="${
+                            loginUser.departmentId == 0 ? '人事部' :
+                            loginUser.departmentId == 1 ? '総務部' :
+                            loginUser.departmentId == 2 ? '営業部' :
+                            loginUser.departmentId == 3 ? '技術部' :
+                            ''
+                        }"></td>
+                        <td th:text="${
+                            loginUser.type == 0 ? '管理者' :
+                            loginUser.type == 1 ? '承認者' :
+                            loginUser.type == 2 ? '一般' :
+                            loginUser.type == 3 ? '管理者兼承認者' :
+                            ''
+                        }"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div th:if="${errorMessages != null}">
             <ul class="errorMessages">
                 <li th:each="err : ${errorMessages}" th:text="${err}"></li>
