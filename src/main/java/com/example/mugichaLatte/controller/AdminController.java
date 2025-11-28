@@ -6,14 +6,15 @@ import com.example.mugichaLatte.repository.entity.User;
 import com.example.mugichaLatte.service.AdminService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,15 +26,21 @@ public class AdminController {
     @Autowired
     AdminService adminService;
     @GetMapping("admin")
-    public ModelAndView adminContents(HttpSession session) {
+    public ModelAndView adminContents(HttpSession session,
+                                      @RequestParam(defaultValue = "1") int page,
+                                      @PageableDefault(size = 10) Pageable defaultPageable) {
         User user = (User) session.getAttribute("loginUser");
         ModelAndView mav = new ModelAndView();
         mav.setViewName("admin");
+        //List<User> userList = new ArrayList<>();
+        //userList = adminService.findAllUser();
 
-        List<User> userList = new ArrayList<>();
-        userList = adminService.findAllUser();
+        // Spring Data JPA は 0始まりなので 1 を引いて PageRequest を作る
+        Pageable pageable = PageRequest.of(page - 1, defaultPageable.getPageSize());
+        Page<User> userPage = adminService.findAllUser(pageable);
         mav.addObject("loginUser", user);
-        mav.addObject("userList", userList);
+        mav.addObject("userList", userPage);
+        //mav.addObject("userList", userList);
         return mav;
     }
 
