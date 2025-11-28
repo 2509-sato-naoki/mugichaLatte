@@ -76,7 +76,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="a : ${attendances}">
+                    <tr th:each="a : ${attendances.content}">
                         <td th:text="${a.user.name}"></td>
                         <td th:text="${a.date}"></td>
                         <td th:switch="${a.workType}">
@@ -94,7 +94,35 @@
                     </tbody>
                 </table>
             </form>
-        </div>
+            <nav class="pager">
+                <!-- 前へ -->
+                <a th:if="${attendances.hasPrevious()}"
+                   th:href="@{/approve(page=${attendances.number})}">前へ</a>
 
+                <!-- 最大3件の数字のみ表示 -->
+                <span th:with="
+            currentPage=${attendances.number + 1},
+            total=${attendances.totalPages},
+            start=${currentPage <= 2 ? 1 : currentPage - 1},
+            end=${start + 2 > total ? total : start + 2}
+            ">
+
+                <span th:each="i : ${#numbers.sequence(start, end)}">
+
+                    <!-- 現在ページ以外はリンク -->
+                    <a th:if="${i != currentPage}"
+                       th:href="@{/approve(page=${i})}"
+                       th:text="${i}"></a>
+
+                    <!-- 現在ページは強調表示 -->
+                    <span th:if="${i == currentPage}"
+                          th:text="${i}" class="current"></span>
+                </span>
+            </span>
+                <!-- 次へ -->
+                <a th:if="${attendances.hasNext()}"
+                   th:href="@{/approve(page=${attendances.number + 2})}">次へ</a>
+            </nav>
+        </div>
     </body>
 </html>

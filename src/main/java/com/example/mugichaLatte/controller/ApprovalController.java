@@ -5,6 +5,10 @@ import com.example.mugichaLatte.repository.entity.User;
 import com.example.mugichaLatte.service.ApprovalService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +25,15 @@ public class ApprovalController {
     ApprovalService approvalService;
 
     @GetMapping("/approve")
-    public ModelAndView showApprovalList(HttpSession session){
+    public ModelAndView showApprovalList(HttpSession session,
+                                         @RequestParam(defaultValue = "1") int page,
+                                         @PageableDefault(size = 10) Pageable defaultPageable){
         ModelAndView mav = new ModelAndView("approve");
-        List<Attendances> list = approvalService.getApprovalList();
+
+        // Spring Data JPA は 0始まりなので 1 を引いて PageRequest を作る
+        Pageable pageable = PageRequest.of(page - 1, defaultPageable.getPageSize());
+        Page<Attendances> list = approvalService.getApprovalList(pageable);
+
         User user = (User) session.getAttribute("loginUser");
         mav.addObject("loginUser", user);
         mav.addObject("attendances", list);

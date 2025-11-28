@@ -1,11 +1,14 @@
 package com.example.mugichaLatte.repository;
 
 import com.example.mugichaLatte.repository.entity.Attendances;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,7 +31,7 @@ public interface AttendancesRepository extends JpaRepository<Attendances, Intege
     //重複チェック用
     boolean existsByUserIdAndDate(int userId, LocalDate date);
     // 申請済かつ未承認の勤怠一覧
-    List<Attendances> findByStatusAndApprovalStatus(int status, int approvalStatus);
+    Page<Attendances> findByStatusAndApprovalStatus(int status, int approvalStatus, Pageable pageable );
 
     //承認用のUPDATE
     @Modifying

@@ -4,6 +4,8 @@ import com.example.mugichaLatte.repository.AttendancesRepository;
 import com.example.mugichaLatte.repository.entity.Attendances;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +15,8 @@ public class ApprovalService {
     @Autowired
     AttendancesRepository attendancesRepository;
 
-    public List<Attendances> getApprovalList(){
-        return attendancesRepository.findByStatusAndApprovalStatus(1,0);
+    public Page<Attendances> getApprovalList(Pageable pageable){
+        return attendancesRepository.findByStatusAndApprovalStatus(1,0, pageable);
     }
 
     @Transactional
