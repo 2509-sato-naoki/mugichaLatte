@@ -129,3 +129,11 @@ tbody td:nth-child(7) {
     color: #000;
     border: 1px solid #ccc;
 }
+
+.pager {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
